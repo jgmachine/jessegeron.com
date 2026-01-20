@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allGames = await getCollection('board-games');
+const games = allGames.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allTags = [...new Set(games.flatMap(g => g.data.tags))].sort();
+---
+
+<Layout title="Board Games - Jesse Geron" description="My board game collection, reviews, and gaming experiences">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <header class="mb-12">
+      <h1 class="text-5xl font-bold gradient-text mb-4">🎲 Board Games</h1>
+      <p class="text-xl text-gray-300">
+        Reviews, session reports, and thoughts on tabletop gaming. Also exploring game design ideas.
+      </p>
+    </header>
+
+    <!-- Filter Section -->
+    <div class="mb-8 glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Filter by Type</h2>
+      <div class="flex flex-wrap gap-2">
+        <a href="/board-games" class="px-4 py-2 gradient-primary rounded-lg text-white text-sm hover:shadow-lg transition">
+          All Games
+        </a>
+        {allTags.map((tag) => (
+          <a href={`/board-games?tag=${encodeURIComponent(tag)}`} class="px-4 py-2 glass-card rounded-lg text-gray-300 text-sm hover:text-white transition">
+            {tag}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Games Grid -->
+    {games.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {games.map((game) => (
+          <Card
+            title={game.data.title}
+            description={game.data.description}
+            href={`/board-games/${game.slug}`}
+            tags={game.data.tags}
+            date={game.data.pubDate}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12 glass-card rounded-2xl">
+        <p class="text-gray-400 text-lg">No game reviews yet. Check back soon!</p>
+      </div>
+    )}
+
+  </div>
+</Layout>

@@ -1,0 +1,91 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allResources = await getCollection('ai-resources');
+const resources = allResources.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+// Get unique topics and tags
+const allTopics = [...new Set(resources.map(r => r.data.topic))].sort();
+const allTags = [...new Set(resources.flatMap(r => r.data.tags))].sort();
+---
+
+<Layout title="AI Resources - Jesse Geron" description="Curated AI resources, guides, and tools">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <header class="mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">AI Resources</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300">
+        Curated guides, tools, and resources for working with AI technologies
+      </p>
+    </header>
+
+    <!-- Filter Section -->
+    <div class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Filter by Topic</h2>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <a href="/ai-resources" class="px-3 py-1 bg-blue-600 text-white rounded-full text-sm hover:bg-blue-700 transition">
+          All Topics
+        </a>
+        {allTopics.map((topic) => (
+          <a href={`/ai-resources?topic=${encodeURIComponent(topic)}`} class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            {topic}
+          </a>
+        ))}
+      </div>
+
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 mt-6">Tags</h2>
+      <div class="flex flex-wrap gap-2">
+        {allTags.map((tag) => (
+          <a href={`/ai-resources?tag=${encodeURIComponent(tag)}`} class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+            #{tag}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Featured Resources -->
+    {resources.some(r => r.data.featured) && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Featured Resources</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {resources.filter(r => r.data.featured).map((resource) => (
+            <Card
+              title={resource.data.title}
+              description={resource.data.description}
+              href={`/ai-resources/${resource.slug}`}
+              tags={[resource.data.topic, ...resource.data.tags]}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- All Resources -->
+    <section>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">All Resources</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {resources.map((resource) => (
+          <Card
+            title={resource.data.title}
+            description={resource.data.description}
+            href={`/ai-resources/${resource.slug}`}
+            tags={[resource.data.topic, ...resource.data.tags]}
+          />
+        ))}
+      </div>
+    </section>
+
+    {resources.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-gray-600 dark:text-gray-400 text-lg">No resources found.</p>
+      </div>
+    )}
+
+  </div>
+</Layout>

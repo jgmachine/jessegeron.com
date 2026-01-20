@@ -1,0 +1,245 @@
+---
+export const prerender = false;
+
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allBooks = await getCollection('books');
+
+// Get filter params from URL
+const url = Astro.url;
+const workPlayFilter = url.searchParams.get('workplay');
+const categoryFilter = url.searchParams.get('category');
+const statusFilter = url.searchParams.get('status');
+const tagFilter = url.searchParams.get('tag');
+
+// Apply filters
+let filteredBooks = allBooks;
+
+if (workPlayFilter) {
+  filteredBooks = filteredBooks.filter(b => b.data.workPlayCategory === workPlayFilter);
+}
+
+if (categoryFilter) {
+  filteredBooks = filteredBooks.filter(b => b.data.category === categoryFilter);
+}
+
+if (statusFilter) {
+  filteredBooks = filteredBooks.filter(b => b.data.status === statusFilter);
+}
+
+if (tagFilter) {
+  filteredBooks = filteredBooks.filter(b => b.data.tags.includes(tagFilter));
+}
+
+const books = filteredBooks.sort((a, b) => {
+  if (!a.data.dateRead) return 1;
+  if (!b.data.dateRead) return -1;
+  return b.data.dateRead.valueOf() - a.data.dateRead.valueOf();
+});
+
+// Get unique categories, tags, and work/play from ALL books (not just filtered)
+const allCategories = [...new Set(allBooks.map(book => book.data.category))].sort();
+const allTags = [...new Set(allBooks.flatMap(book => book.data.tags))].sort();
+const workPlayCategories = ['Work', 'Play'];
+const statuses = ['reading', 'read', 'to-read'];
+
+// Check if any filters are active
+const hasFilters = !!(workPlayFilter || categoryFilter || statusFilter || tagFilter);
+
+// Group books by status
+const currentlyReading = books.filter(b => b.data.status === 'reading');
+const haveRead = books.filter(b => b.data.status === 'read');
+const toRead = books.filter(b => b.data.status === 'to-read');
+---
+
+<Layout title="Reading List - Jesse Geron" description="Books I'm reading and recommend">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <header class="mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Reading List</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300">
+        Books spanning leadership, technology, AI, and personal interests
+      </p>
+    </header>
+
+    <!-- Filter Section -->
+    <div class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Filter by Topic</h2>
+        {hasFilters && (
+          <a href="/reading" class="text-sm text-blue-600 dark:text-blue-400 hover:underline" data-astro-reload>
+            Clear Filters
+          </a>
+        )}
+      </div>
+      
+      <div class="flex flex-wrap gap-2 mb-6">
+        <a 
+          href="/reading"
+          data-astro-reload
+          class={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+            !hasFilters 
+              ? 'bg-blue-600 text-white' 
+              : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'
+          }`}
+        >
+          All Books
+        </a>
+        {workPlayCategories.map((wpCat) => (
+          <a 
+            href={`/reading?workplay=${encodeURIComponent(wpCat)}`}
+            data-astro-reload
+            class={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+              workPlayFilter === wpCat
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'
+            }`}
+          >
+            {wpCat}
+          </a>
+        ))}
+      </div>
+
+      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Categories</h3>
+      <div class="flex flex-wrap gap-2 mb-6">
+        {allCategories.map((category) => (
+          <a 
+            href={`/reading?category=${encodeURIComponent(category)}`}
+            data-astro-reload
+            class={`px-3 py-1 rounded-full text-sm transition ${
+              categoryFilter === category
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+            }`}
+          >
+            {category}
+          </a>
+        ))}
+      </div>
+
+      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Status</h3>
+      <div class="flex flex-wrap gap-2 mb-6">
+        {statuses.map((status) => (
+          <a 
+            href={`/reading?status=${status}`}
+            data-astro-reload
+            class={`px-3 py-1 rounded-full text-sm border transition ${
+              statusFilter === status
+                ? 'bg-blue-600 text-white border-blue-600'
+                : 'bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900/50'
+            }`}
+          >
+            {status === 'reading' ? 'Currently Reading' : status === 'to-read' ? 'Want to Read' : 'Have Read'}
+          </a>
+        ))}
+      </div>
+
+      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Tags</h3>
+      <div class="flex flex-wrap gap-2">
+        {allTags.map((tag) => (
+          <a 
+            href={`/reading?tag=${encodeURIComponent(tag)}`}
+            data-astro-reload
+            class={`px-3 py-1 rounded-full text-sm border transition ${
+              tagFilter === tag
+                ? 'bg-blue-600 text-white border-blue-600'
+                : 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50'
+            }`}
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Currently Reading -->
+    {currentlyReading.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Currently Reading</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentlyReading.map((book) => (
+            <a href={`/reading/${book.slug}`} class="block group">
+              <article class="card card-hover rounded-xl p-6 h-full hover-lift">
+                <div class="flex items-start gap-4">
+                  {book.data.coverImage && (
+                    <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
+                  )}
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition mb-2">
+                      {book.data.title}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{book.data.author}</p>
+                    <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs rounded-full">
+                      Reading
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Have Read -->
+    {haveRead.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Have Read</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {haveRead.map((book) => (
+            <a href={`/reading/${book.slug}`} class="block group">
+              <article class="card card-hover rounded-xl p-6 h-full hover-lift">
+                <div class="flex items-start gap-4">
+                  {book.data.coverImage && (
+                    <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
+                  )}
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition mb-2">
+                      {book.data.title}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{book.data.author}</p>
+                  </div>
+                </div>
+              </article>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Want to Read -->
+    {toRead.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Want to Read</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {toRead.map((book) => (
+            <a href={`/reading/${book.slug}`} class="block group">
+              <article class="card card-hover rounded-xl p-6 h-full hover-lift">
+                <div class="flex items-start gap-4">
+                  {book.data.coverImage && (
+                    <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
+                  )}
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition mb-2">
+                      {book.data.title}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">{book.data.author}</p>
+                  </div>
+                </div>
+              </article>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {books.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-gray-600 dark:text-gray-400 text-lg">No books found.</p>
+      </div>
+    )}
+
+  </div>
+</Layout>

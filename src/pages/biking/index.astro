@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allRides = await getCollection('biking');
+const rides = allRides.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="Mountain Biking - Jesse Geron" description="Trail reports, gear thoughts, and mountain biking adventures">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <header class="mb-12">
+      <h1 class="text-5xl font-bold gradient-text mb-4">🚵 Mountain Biking</h1>
+      <p class="text-xl text-gray-300">
+        Trail reports, gear notes, and adventures on two wheels. Always learning, sometimes crashing.
+      </p>
+    </header>
+
+    <!-- Stats Card (placeholder for future) -->
+    <div class="glass-card rounded-2xl p-8 mb-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <div class="text-3xl font-bold gradient-text">{rides.length}</div>
+          <div class="text-gray-400 text-sm">Ride Reports</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold gradient-text">Coming</div>
+          <div class="text-gray-400 text-sm">Total Miles</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold gradient-text">Soon</div>
+          <div class="text-gray-400 text-sm">Trails Ridden</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold gradient-text">⛰️</div>
+          <div class="text-gray-400 text-sm">Elevation Gained</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rides Grid -->
+    {rides.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {rides.map((ride) => (
+          <Card
+            title={ride.data.title}
+            description={ride.data.description}
+            href={`/biking/${ride.slug}`}
+            tags={ride.data.tags}
+            date={ride.data.pubDate}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12 glass-card rounded-2xl">
+        <p class="text-gray-400 text-lg">No ride reports yet. Get out there!</p>
+      </div>
+    )}
+
+  </div>
+</Layout>

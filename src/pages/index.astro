@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allBlogPosts = await getCollection('blog');
+const recentPosts = allBlogPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(project => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
+
+const aiResources = await getCollection('ai-resources');
+const featuredAI = aiResources.filter(r => r.data.featured).slice(0, 2);
+---
+
+<Layout title="Jesse Geron - K-12 Tech Leader & AI Enthusiast">
+  <!-- Hero Section -->
+  <section class="relative py-20 md:py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-4xl mx-auto">
+        <div class="mb-6 inline-block px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full text-sm text-blue-600 dark:text-blue-400 font-medium">
+          👋 Welcome to my digital space
+        </div>
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-black mb-6 text-gray-900 dark:text-white">
+          Jesse Geron
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4 font-semibold">
+          K-12 Tech Leader • Developer • AI Enthusiast
+        </p>
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
+          A place for thoughts on education technology, AI, web development, and personal interests
+          including tabletop gaming and mountain biking.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="/ai-resources" class="btn-primary hover-lift">
+            Explore AI Resources
+          </a>
+          <a href="/projects" class="btn-secondary hover-lift">
+            View Projects
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- What I Do Section -->
+  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card card-hover rounded-xl p-8 hover-lift">
+        <div class="text-4xl mb-4">🎓</div>
+        <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">K-12 Tech Leadership</h3>
+        <p class="text-gray-600 dark:text-gray-400">
+          Leading technology initiatives in K-12 education, making IT work better for schools and students.
+        </p>
+      </div>
+      <div class="card card-hover rounded-xl p-8 hover-lift">
+        <div class="text-4xl mb-4">🤖</div>
+        <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">AI & Development</h3>
+        <p class="text-gray-600 dark:text-gray-400">
+          Building modern web applications and exploring the frontier of AI technologies and their applications.
+        </p>
+      </div>
+      <div class="card card-hover rounded-xl p-8 hover-lift">
+        <div class="text-4xl mb-4">🎲</div>
+        <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Life & Hobbies</h3>
+        <p class="text-gray-600 dark:text-gray-400">
+          Tabletop gaming enthusiast and mountain biker exploring the trails and tabletops.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured AI Resources -->
+  {featuredAI.length > 0 && (
+    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Featured AI Resources</h2>
+        <a href="/ai-resources" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition flex items-center gap-2 font-medium">
+          View all <span>→</span>
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {featuredAI.map((resource) => (
+          <Card
+            title={resource.data.title}
+            description={resource.data.description}
+            href={`/ai-resources/${resource.slug}`}
+            tags={[resource.data.type, resource.data.topic]}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Featured Projects -->
+  {featuredProjects.length > 0 && (
+    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Featured Projects</h2>
+        <a href="/projects" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition flex items-center gap-2 font-medium">
+          View all <span>→</span>
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {featuredProjects.map((project) => (
+          <Card
+            title={project.data.title}
+            description={project.data.description}
+            href={`/projects/${project.slug}`}
+            tags={project.data.tags}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Recent Blog Posts -->
+  {recentPosts.length > 0 && (
+    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Latest from the Blog</h2>
+        <a href="/blog" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition flex items-center gap-2 font-medium">
+          View all <span>→</span>
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {recentPosts.map((post) => (
+          <Card
+            title={post.data.title}
+            description={post.data.description}
+            href={`/blog/${post.slug}`}
+            tags={post.data.tags}
+            date={post.data.pubDate}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="card rounded-2xl p-12 text-center bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-100 dark:border-blue-800">
+      <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Let's Connect</h2>
+      <p class="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+        Interested in K-12 tech, AI, or just want to chat about tabletop games and bikes?
+      </p>
+      <a href="/about" class="inline-block btn-primary hover-lift">
+        Get in Touch
+      </a>
+    </div>
+  </section>
+</Layout>

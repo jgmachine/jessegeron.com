@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allDocs = await getCollection('work-docs');
+const docs = allDocs
+  .filter(doc => !doc.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allCategories = [...new Set(docs.map(d => d.data.category))].sort();
+---
+
+<Layout title="Work Documentation - Jesse Geron" description="K-12 IT documentation, projects, and lessons learned">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <header class="mb-12">
+      <h1 class="text-5xl font-bold gradient-text mb-4">📚 Work Documentation</h1>
+      <p class="text-xl text-gray-300">
+        Documentation of projects, deployments, and technical solutions in K-12 education IT.
+        Things I've built, lessons learned, and notes for future me.
+      </p>
+    </header>
+
+    <!-- Category Filter -->
+    <div class="mb-8 glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Filter by Category</h2>
+      <div class="flex flex-wrap gap-2">
+        <a href="/work-docs" class="px-4 py-2 gradient-primary rounded-lg text-white text-sm hover:shadow-lg transition">
+          All Topics
+        </a>
+        {allCategories.map((category) => (
+          <a href={`/work-docs?category=${encodeURIComponent(category)}`} class="px-4 py-2 glass-card rounded-lg text-gray-300 text-sm hover:text-white transition">
+            {category}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Docs Grid -->
+    {docs.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {docs.map((doc) => (
+          <Card
+            title={doc.data.title}
+            description={doc.data.description}
+            href={`/work-docs/${doc.slug}`}
+            tags={[doc.data.category, ...doc.data.tags]}
+            date={doc.data.pubDate}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12 glass-card rounded-2xl">
+        <p class="text-gray-400 text-lg">No documentation yet. Check back soon!</p>
+      </div>
+    )}
+
+    <!-- Disclaimer -->
+    <div class="mt-12 glass-card rounded-2xl p-6 border-l-4 border-purple-500">
+      <p class="text-gray-400 text-sm">
+        <strong class="text-white">Note:</strong> All documentation here represents personal learning and general approaches.
+        Specific implementation details have been anonymized for privacy. Always adapt solutions to your district's specific needs and policies.
+      </p>
+    </div>
+
+  </div>
+</Layout>
