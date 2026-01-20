@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import { getCollection } from 'astro:content';
+import { Bike } from 'lucide-astro';
 
 const allRides = await getCollection('biking');
 const rides = allRides.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -10,8 +11,13 @@ const rides = allRides.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.
 <Layout title="Mountain Biking - Jesse Geron" description="Trail reports, gear thoughts, and mountain biking adventures">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-    <header class="mb-12">
-      <h1 class="text-5xl font-bold gradient-text mb-4">🚵 Mountain Biking</h1>
+    <header class="mb-12 flex items-center gap-4">
+      <div class="text-green-600 dark:text-green-400">
+        <Bike size={48} />
+      </div>
+      <h1 class="text-5xl font-bold gradient-text">Mountain Biking</h1>
+    </header>
+    <div class="mb-12">
       <p class="text-xl text-gray-300">
         Trail reports, gear notes, and adventures on two wheels. Always learning, sometimes crashing.
       </p>

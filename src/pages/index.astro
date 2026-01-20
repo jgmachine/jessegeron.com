@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
+import { Bot, Dices, BookOpen, GraduationCap } from 'lucide-astro';
 
 const allBlogPosts = await getCollection('blog');
 const recentPosts = allBlogPosts
@@ -25,7 +26,7 @@ const featuredAI = aiResources.filter(r => r.data.featured).slice(0, 2);
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-4xl mx-auto">
         <div class="mb-6 inline-block px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full text-sm text-blue-600 dark:text-blue-400 font-medium">
-          👋 Welcome to my digital space
+          Welcome to my digital space
         </div>
         <h1 class="text-5xl sm:text-6xl md:text-7xl font-black mb-6 text-gray-900 dark:text-white">
           Jesse Geron
@@ -54,21 +55,27 @@ const featuredAI = aiResources.filter(r => r.data.featured).slice(0, 2);
   <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="card card-hover rounded-xl p-8 hover-lift">
-        <div class="text-4xl mb-4">🎓</div>
-        <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">K-12 Tech Leadership</h3>
+        <div class="mb-4 text-indigo-600 dark:text-indigo-400">
+          <GraduationCap size={48} />
+        </div>
+        <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">K-12 Technology Leader</h3>
         <p class="text-gray-600 dark:text-gray-400">
           Leading technology initiatives in K-12 education, making IT work better for schools and students.
         </p>
       </div>
       <div class="card card-hover rounded-xl p-8 hover-lift">
-        <div class="text-4xl mb-4">🤖</div>
+        <div class="mb-4 text-blue-600 dark:text-blue-400">
+          <Bot size={48} />
+        </div>
         <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">AI & Development</h3>
         <p class="text-gray-600 dark:text-gray-400">
           Building modern web applications and exploring the frontier of AI technologies and their applications.
         </p>
       </div>
       <div class="card card-hover rounded-xl p-8 hover-lift">
-        <div class="text-4xl mb-4">🎲</div>
+        <div class="mb-4 text-purple-600 dark:text-purple-400">
+          <Dices size={48} />
+        </div>
         <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Life & Hobbies</h3>
         <p class="text-gray-600 dark:text-gray-400">
           Tabletop gaming enthusiast and mountain biker exploring the trails and tabletops.

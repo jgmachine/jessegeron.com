@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import { getCollection } from 'astro:content';
+import { BookOpen } from 'lucide-astro';
 
 const allDocs = await getCollection('work-docs');
 const docs = allDocs
@@ -14,8 +15,13 @@ const allCategories = [...new Set(docs.map(d => d.data.category))].sort();
 <Layout title="Work Documentation - Jesse Geron" description="K-12 IT documentation, projects, and lessons learned">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-    <header class="mb-12">
-      <h1 class="text-5xl font-bold gradient-text mb-4">📚 Work Documentation</h1>
+    <header class="mb-12 flex items-center gap-4">
+      <div class="text-blue-600 dark:text-blue-400">
+        <BookOpen size={48} />
+      </div>
+      <h1 class="text-5xl font-bold gradient-text">Work Documentation</h1>
+    </header>
+    <div class="mb-12">
       <p class="text-xl text-gray-300">
         Documentation of projects, deployments, and technical solutions in K-12 education IT.
         Things I've built, lessons learned, and notes for future me.

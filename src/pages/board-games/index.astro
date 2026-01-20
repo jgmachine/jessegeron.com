@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import { getCollection } from 'astro:content';
+import { Dices } from 'lucide-astro';
 
 const allGames = await getCollection('board-games');
 const games = allGames.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -12,8 +13,13 @@ const allTags = [...new Set(games.flatMap(g => g.data.tags))].sort();
 <Layout title="Board Games - Jesse Geron" description="My board game collection, reviews, and gaming experiences">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-    <header class="mb-12">
-      <h1 class="text-5xl font-bold gradient-text mb-4">🎲 Board Games</h1>
+    <header class="mb-12 flex items-center gap-4">
+      <div class="text-purple-600 dark:text-purple-400">
+        <Dices size={48} />
+      </div>
+      <h1 class="text-5xl font-bold gradient-text">Board Games</h1>
+    </header>
+    <div class="mb-12">
       <p class="text-xl text-gray-300">
         Reviews, session reports, and thoughts on tabletop gaming. Also exploring game design ideas.
       </p>
