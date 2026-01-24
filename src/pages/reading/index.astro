@@ -31,7 +31,7 @@ const toRead = books.filter(b => b.data.status === 'to-read');
     <PageHeaderBackground />
     <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <header class="text-center">
-        <h1 class="text-4xl sm:text-5xl font-black text-gray-900 mb-4">
+        <h1 class="text-5xl sm:text-6xl font-black text-gray-900 mb-6">
           <span class="gradient-text">Reading List</span>
         </h1>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -41,68 +41,68 @@ const toRead = books.filter(b => b.data.status === 'to-read');
     </div>
   </section>
 
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
     <!-- Filter Section -->
-    <div class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Filter by Topic</h2>
-        <button id="clearFilters" class="hidden text-sm text-blue-600 dark:text-blue-400 hover:underline">
+    <div class="mb-12 p-8 bg-white rounded-2xl shadow-sm border border-gray-200">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-bold text-gray-900">Filter by Topic</h2>
+        <button id="clearFilters" class="hidden text-sm text-blue-600 hover:underline">
           Clear Filters
         </button>
       </div>
       
-      <div class="flex flex-wrap gap-2 mb-6">
-        <button 
+      <div class="flex flex-wrap gap-3 mb-8">
+        <button
           data-filter-type="all"
-          class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-blue-600 text-white"
+          class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-blue-600 text-white shadow-sm"
         >
           All Books
         </button>
         {workPlayCategories.map((wpCat) => (
-          <button 
+          <button
             data-filter-type="workplay"
             data-filter-value={wpCat}
-            class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+            class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-gray-100 text-gray-900 hover:bg-gray-200"
           >
             {wpCat}
           </button>
         ))}
       </div>
 
-      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Categories</h3>
-      <div class="flex flex-wrap gap-2 mb-6">
+      <h3 class="text-base font-bold text-gray-900 mb-4">Categories</h3>
+      <div class="flex flex-wrap gap-2 mb-8">
         {allCategories.map((category) => (
-          <button 
+          <button
             data-filter-type="category"
             data-filter-value={category}
-            class="filter-btn px-3 py-1 rounded-full text-sm transition bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-700 border border-gray-200 hover:border-blue-200"
           >
             {category}
           </button>
         ))}
       </div>
 
-      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Status</h3>
-      <div class="flex flex-wrap gap-2 mb-6">
+      <h3 class="text-base font-bold text-gray-900 mb-4">Status</h3>
+      <div class="flex flex-wrap gap-2 mb-8">
         {statuses.map((status) => (
-          <button 
+          <button
             data-filter-type="status"
             data-filter-value={status}
-            class="filter-btn px-3 py-1 rounded-full text-sm border transition bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900/50"
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border transition bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100"
           >
             {status === 'reading' ? 'Currently Reading' : status === 'to-read' ? 'Want to Read' : 'Have Read'}
           </button>
         ))}
       </div>
 
-      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Tags</h3>
+      <h3 class="text-base font-bold text-gray-900 mb-4">Tags</h3>
       <div class="flex flex-wrap gap-2">
         {allTags.map((tag) => (
-          <button 
+          <button
             data-filter-type="tag"
             data-filter-value={tag}
-            class="filter-btn px-3 py-1 rounded-full text-sm border transition bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50"
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border transition bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
           >
             #{tag}
           </button>
@@ -111,29 +111,29 @@ const toRead = books.filter(b => b.data.status === 'to-read');
     </div>
 
     <!-- Currently Reading -->
-    <section class="mb-12 book-section" data-status="reading">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Currently Reading</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="mb-16 book-section" data-status="reading">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Currently Reading</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentlyReading.map((book) => (
-          <a 
-            href={`/reading/${book.slug}`} 
-            class="book-card block group" 
+          <a
+            href={`/reading/${book.slug}`}
+            class="book-card block group"
             data-status={book.data.status}
             data-category={book.data.category}
             data-workplay={book.data.workPlayCategory}
             data-tags={book.data.tags.join(',')}
           >
-            <article class="card card-hover rounded-xl p-6 h-full hover-lift">
+            <article class="card card-hover p-8 h-full">
               <div class="flex items-start gap-4">
                 {book.data.coverImage && (
                   <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
                 )}
                 <div class="flex-1">
-                  <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition mb-2">
+                  <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                     {book.data.title}
                   </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{book.data.author}</p>
-                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs rounded-full">
+                  <p class="text-sm text-gray-600 mb-3">{book.data.author}</p>
+                  <span class="px-3 py-1.5 bg-green-50 text-green-700 text-xs font-semibold rounded-full border border-green-200">
                     Reading
                   </span>
                 </div>
@@ -145,28 +145,28 @@ const toRead = books.filter(b => b.data.status === 'to-read');
     </section>
 
     <!-- Have Read -->
-    <section class="mb-12 book-section" data-status="read">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Have Read</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="mb-16 book-section" data-status="read">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Have Read</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {haveRead.map((book) => (
-          <a 
-            href={`/reading/${book.slug}`} 
+          <a
+            href={`/reading/${book.slug}`}
             class="book-card block group"
             data-status={book.data.status}
             data-category={book.data.category}
             data-workplay={book.data.workPlayCategory}
             data-tags={book.data.tags.join(',')}
           >
-            <article class="card card-hover rounded-xl p-6 h-full hover-lift">
+            <article class="card card-hover p-8 h-full">
               <div class="flex items-start gap-4">
                 {book.data.coverImage && (
                   <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
                 )}
                 <div class="flex-1">
-                  <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition mb-2">
+                  <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                     {book.data.title}
                   </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{book.data.author}</p>
+                  <p class="text-sm text-gray-600">{book.data.author}</p>
                 </div>
               </div>
             </article>
@@ -176,28 +176,28 @@ const toRead = books.filter(b => b.data.status === 'to-read');
     </section>
 
     <!-- Want to Read -->
-    <section class="mb-12 book-section" data-status="to-read">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Want to Read</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="mb-16 book-section" data-status="to-read">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Want to Read</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {toRead.map((book) => (
-          <a 
-            href={`/reading/${book.slug}`} 
+          <a
+            href={`/reading/${book.slug}`}
             class="book-card block group"
             data-status={book.data.status}
             data-category={book.data.category}
             data-workplay={book.data.workPlayCategory}
             data-tags={book.data.tags.join(',')}
           >
-            <article class="card card-hover rounded-xl p-6 h-full hover-lift">
+            <article class="card card-hover p-8 h-full">
               <div class="flex items-start gap-4">
                 {book.data.coverImage && (
                   <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
                 )}
                 <div class="flex-1">
-                  <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition mb-2">
+                  <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                     {book.data.title}
                   </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">{book.data.author}</p>
+                  <p class="text-sm text-gray-600">{book.data.author}</p>
                 </div>
               </div>
             </article>
@@ -206,8 +206,8 @@ const toRead = books.filter(b => b.data.status === 'to-read');
       </div>
     </section>
 
-    <div id="noResults" class="hidden text-center py-12">
-      <p class="text-gray-600 dark:text-gray-400 text-lg">No books found matching your filters.</p>
+    <div id="noResults" class="hidden text-center py-16">
+      <p class="text-gray-600 text-lg">No books found matching your filters.</p>
     </div>
 
   </div>
@@ -282,13 +282,13 @@ const toRead = books.filter(b => b.data.status === 'to-read');
 
       // Update classes
       if (isActive) {
-        btnEl.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'bg-gray-100', 'bg-purple-50', 'dark:bg-purple-900/30', 'bg-blue-50', 'dark:bg-blue-900/30');
+        btnEl.classList.remove('bg-gray-100', 'bg-purple-50', 'bg-blue-50');
         btnEl.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
       } else {
         btnEl.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
         if (filterType === 'workplay' || filterType === 'all') {
-          if (!btnEl.classList.contains('bg-gray-200')) {
-            btnEl.classList.add('bg-gray-200', 'dark:bg-gray-700');
+          if (!btnEl.classList.contains('bg-gray-100')) {
+            btnEl.classList.add('bg-gray-100');
           }
         }
       }
@@ -321,14 +321,4 @@ const toRead = books.filter(b => b.data.status === 'to-read');
 
   // Apply filters on page load
   applyFilters();
-</script>ection>
-    )}
-
-    {books.length === 0 && (
-      <div class="text-center py-12">
-        <p class="text-gray-600 dark:text-gray-400 text-lg">No books found.</p>
-      </div>
-    )}
-
-  </div>
-</Layout>
+</script>
