@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
+import PageHeaderBackground from '../../components/PageHeaderBackground.astro';
 import { getCollection } from 'astro:content';
 
 const allBooks = await getCollection('books');
@@ -25,14 +26,22 @@ const toRead = books.filter(b => b.data.status === 'to-read');
 ---
 
 <Layout title="Reading List - Jesse Geron" description="Books I'm reading and recommend">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Header with animated background -->
+  <section class="relative py-20 overflow-hidden">
+    <PageHeaderBackground />
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="text-center">
+        <h1 class="text-4xl sm:text-5xl font-black text-gray-900 mb-4">
+          <span class="gradient-text">Reading List</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Books spanning leadership, technology, AI, and personal interests
+        </p>
+      </header>
+    </div>
+  </section>
 
-    <header class="mb-12">
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Reading List</h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300">
-        Books spanning leadership, technology, AI, and personal interests
-      </p>
-    </header>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
 
     <!-- Filter Section -->
     <div class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">

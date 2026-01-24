@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
+import PageHeaderBackground from '../../components/PageHeaderBackground.astro';
 import { getCollection } from 'astro:content';
 
 const allResources = await getCollection('ai-resources');
@@ -16,16 +17,22 @@ const allTags = [...new Set(resources.flatMap(r => r.data.tags))].sort();
 ---
 
 <Layout title="AI Resources - Jesse Geron" description="Curated AI resources, guides, and tools">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <!-- Header with animated background -->
+  <section class="relative py-20 overflow-hidden">
+    <PageHeaderBackground />
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="text-center">
+        <h1 class="text-5xl sm:text-6xl font-black text-gray-900 mb-6">
+          <span class="gradient-text">AI Resources</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Curated guides, tools, and resources for working with AI technologies
+        </p>
+      </header>
+    </div>
+  </section>
 
-    <header class="mb-16 text-center">
-      <h1 class="text-5xl sm:text-6xl font-black text-gray-900 mb-6">
-        <span class="gradient-text">AI Resources</span>
-      </h1>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-        Curated guides, tools, and resources for working with AI technologies
-      </p>
-    </header>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
     <!-- Filter Section -->
     <div class="mb-12 p-8 bg-white rounded-2xl shadow-sm border border-gray-200">

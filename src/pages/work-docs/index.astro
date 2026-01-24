@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
+import PageHeaderBackground from '../../components/PageHeaderBackground.astro';
 import { getCollection } from 'astro:content';
 import { BookOpen } from 'lucide-astro';
 
@@ -13,20 +14,24 @@ const allCategories = [...new Set(docs.map(d => d.data.category))].sort();
 ---
 
 <Layout title="Work Documentation - Jesse Geron" description="K-12 IT documentation, projects, and lessons learned">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-    <header class="mb-12 flex items-center gap-4">
-      <div class="text-blue-600 dark:text-blue-400">
-        <BookOpen size={48} />
-      </div>
-      <h1 class="text-5xl font-bold gradient-text">Work Documentation</h1>
-    </header>
-    <div class="mb-12">
-      <p class="text-xl text-gray-300">
+  <!-- Header with animated background -->
+  <section class="relative py-20 overflow-hidden">
+    <PageHeaderBackground />
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="flex items-center justify-center gap-4 mb-6">
+        <div class="text-blue-600">
+          <BookOpen size={48} />
+        </div>
+        <h1 class="text-5xl font-black gradient-text">Work Documentation</h1>
+      </header>
+      <p class="text-xl text-gray-600 text-center max-w-2xl mx-auto">
         Documentation of projects, deployments, and technical solutions in K-12 education IT.
         Things I've built, lessons learned, and notes for future me.
       </p>
-    </header>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
 
     <!-- Category Filter -->
     <div class="mb-8 glass-card rounded-2xl p-6">

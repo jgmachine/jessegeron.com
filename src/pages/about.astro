@@ -1,15 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeaderBackground from '../components/PageHeaderBackground.astro';
 ---
 
 <Layout title="About - Jesse Geron" description="Learn more about Jesse Geron">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <!-- Header with animated background -->
+  <section class="relative py-20 overflow-hidden">
+    <PageHeaderBackground />
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="text-center">
+        <h1 class="text-5xl sm:text-6xl font-black text-gray-900 mb-6">
+          About <span class="gradient-text">Me</span>
+        </h1>
+      </header>
+    </div>
+  </section>
 
-    <header class="mb-16 text-center">
-      <h1 class="text-5xl sm:text-6xl font-black text-gray-900 mb-6">
-        About <span class="gradient-text">Me</span>
-      </h1>
-    </header>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
     <div class="prose prose-lg max-w-none">
 
