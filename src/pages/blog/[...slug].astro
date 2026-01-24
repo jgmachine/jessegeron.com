@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import Comments from '../../components/Comments.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -65,6 +66,8 @@ const { Content } = await entry.render();
                 prose-blockquote:border-l-4 prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:rounded-r-lg">
       <Content />
     </div>
+
+    <Comments />
 
   </article>
 </Layout>
