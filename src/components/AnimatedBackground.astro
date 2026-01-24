@@ -1,0 +1,111 @@
+---
+// Animated grid background component for hero section
+---
+
+<div id="animated-bg" class="absolute inset-0 overflow-hidden pointer-events-none">
+  <canvas id="grid-canvas" class="w-full h-full"></canvas>
+</div>
+
+<script>
+  const canvas = document.getElementById('grid-canvas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  
+  // Responsive grid size
+  const gridSize = width < 768 ? 60 : 40;
+  const particleCount = Math.min(50, Math.floor((width * height) / 20000));
+  
+  interface Particle {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+  }
+  
+  const particles: Particle[] = [];
+  
+  // Initialize particles
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      size: Math.random() * 2 + 1
+    });
+  }
+  
+  function drawGrid() {
+    ctx.strokeStyle = 'rgba(59, 130, 246, 0.15)';
+    ctx.lineWidth = 1;
+    
+    // Vertical lines
+    for (let x = 0; x < width; x += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke();
+    }
+    
+    // Horizontal lines
+    for (let y = 0; y < height; y += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+      ctx.stroke();
+    }
+  }
+  
+  function drawParticles() {
+    particles.forEach(particle => {
+      // Update position
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+      
+      // Bounce off edges
+      if (particle.x < 0 || particle.x > width) particle.vx *= -1;
+      if (particle.y < 0 || particle.y > height) particle.vy *= -1;
+      
+      // Draw particle
+      ctx.fillStyle = 'rgba(59, 130, 246, 0.6)';
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Draw connections
+      particles.forEach(otherParticle => {
+        const dx = particle.x - otherParticle.x;
+        const dy = particle.y - otherParticle.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 150) {
+          ctx.strokeStyle = `rgba(59, 130, 246, ${0.25 * (1 - distance / 150)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(otherParticle.x, otherParticle.y);
+          ctx.stroke();
+        }
+      });
+    });
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    drawGrid();
+    drawParticles();
+    requestAnimationFrame(animate);
+  }
+  
+  // Handle resize
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+  
+  // Start animation
+  animate();
+</script>

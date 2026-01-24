@@ -15,42 +15,44 @@ const workPlayCategories = ['Work', 'Play'];
 ---
 
 <Layout title="Blog - Jesse Geron" description="Articles about software development, AI, and technology">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
-    <header class="mb-12">
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Blog</h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300">
+    <header class="mb-16 text-center">
+      <h1 class="text-5xl sm:text-6xl font-black text-gray-900 mb-6">
+        <span class="gradient-text">Blog</span>
+      </h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
         Thoughts and insights on software development, AI, and technology
       </p>
     </header>
 
     <!-- Filter Section -->
-    <div class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Filter by Topic</h2>
-      <div class="flex flex-wrap gap-2 mb-6">
-        <a href="/blog" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition">
+    <div class="mb-12 p-8 bg-white rounded-2xl shadow-sm border border-gray-200">
+      <h2 class="text-xl font-bold text-gray-900 mb-6">Filter by Topic</h2>
+      <div class="flex flex-wrap gap-3 mb-8">
+        <a href="/blog" class="px-5 py-2.5 bg-blue-600 text-white rounded-full text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm">
           All Posts
         </a>
         {workPlayCategories.map((wpCat) => (
-          <a href={`/blog?workplay=${encodeURIComponent(wpCat)}`} class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg text-sm font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+          <a href={`/blog?workplay=${encodeURIComponent(wpCat)}`} class="px-5 py-2.5 bg-gray-100 text-gray-900 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors">
             {wpCat}
           </a>
         ))}
       </div>
 
-      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Categories</h3>
-      <div class="flex flex-wrap gap-2 mb-6">
+      <h3 class="text-base font-bold text-gray-900 mb-4">Categories</h3>
+      <div class="flex flex-wrap gap-2 mb-8">
         {allCategories.map((category) => (
-          <a href={`/blog?category=${encodeURIComponent(category)}`} class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+          <a href={`/blog?category=${encodeURIComponent(category)}`} class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-blue-50 hover:text-blue-700 transition-all border border-gray-200 hover:border-blue-200">
             {category}
           </a>
         ))}
       </div>
 
-      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Tags</h3>
+      <h3 class="text-base font-bold text-gray-900 mb-4">Tags</h3>
       <div class="flex flex-wrap gap-2">
         {allTags.map((tag) => (
-          <a href={`/blog?tag=${encodeURIComponent(tag)}`} class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition">
+          <a href={`/blog?tag=${encodeURIComponent(tag)}`} class="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm border border-blue-200 hover:bg-blue-100 transition-all font-medium">
             #{tag}
           </a>
         ))}
@@ -58,7 +60,7 @@ const workPlayCategories = ['Work', 'Play'];
     </div>
 
     <!-- Blog Posts Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {posts.map((post) => (
         <Card
           title={post.data.title}
@@ -71,8 +73,8 @@ const workPlayCategories = ['Work', 'Play'];
     </div>
 
     {posts.length === 0 && (
-      <div class="text-center py-12">
-        <p class="text-gray-600 dark:text-gray-400 text-lg">No blog posts found.</p>
+      <div class="text-center py-16">
+        <p class="text-gray-600 text-lg">No blog posts found.</p>
       </div>
     )}
 

@@ -30,8 +30,21 @@ If you have an hour this week, I highly recommend watching these two resources i
 Tristan visualizes our future as a choice between two extremes. On one side is Chaos, where unregulated, decentralized AI leads to a total collapse of trust through deepfakes and social fracturing. On the other side is Dystopia, where highly regulated AI is kept solely in the hands of massive corporations or authoritarian governments.
 
 ![The Narrow Path visualization showing the balance between chaos and dystopia](/images/blog/ai-governance-narrow-path.png)
+<small>*Image adapted from [The Narrow Path: Why AI is Our Ultimate Test](https://centerforhumanetechnology.substack.com/p/the-narrow-path-why-ai-is-our-ultimate) by Tristan Harris and the Center for Humane Technology*</small>
 
 The Narrow Path is the thin sliver in the middle. This is where we use technology to enhance human wisdom rather than replace it.
+
+## The Power We're Surrendering
+
+One insight from Tristan's discussion particularly struck me: the historical power dynamic between people and institutions has always been rooted in labor. When workers were essential to production, they had leverage. Strikes worked. Collective action mattered. People could demand change because governments and corporations needed them to keep the system running.
+
+But what happens when the workforce itself becomes optional?
+
+Tristan draws a fascinating parallel between traditional immigration and what he calls "digital immigration." We've built entire regulatory frameworks around physical immigration—quotas, visa systems, border policies—precisely because we recognized that large-scale labor displacement could destabilize society. We understood that an influx of workers competing for jobs required careful management and protection for existing workers.
+
+Yet when it comes to AI—these digital immigrants capable of replacing cognitive labor at unprecedented scale—we're taking the opposite approach. We're not just allowing them in, we're racing to deploy them as fast as possible with minimal oversight or consideration for the displacement they'll cause. The irony is stark: we regulate human immigration to protect jobs, but we're all-in on welcoming artificial workers that could fundamentally shift the balance of power away from people entirely.
+
+If we lose our leverage as the essential workforce, what power do citizens retain to hold institutions accountable? It's a question that should be central to every conversation about AI deployment, yet it's rarely discussed in those terms.
 
 ## Why This Matters for TK-12 Education
 

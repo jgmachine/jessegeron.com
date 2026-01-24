@@ -10,23 +10,23 @@ interface Props {
 const { title, description, href, tags = [], date } = Astro.props;
 ---
 
-<a href={href} class="block group">
-  <article class="card card-hover rounded-xl p-6 h-full hover-lift">
+<a href={href} class="block group h-full">
+  <article class="card card-hover p-8 h-full flex flex-col">
     {date && (
-      <time class="text-sm text-blue-600 dark:text-blue-400 block mb-2 font-medium">
+      <time class="text-sm text-blue-600 font-semibold block mb-3">
         {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
       </time>
     )}
-    <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition mb-3">
+    <h3 class="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 leading-tight">
       {title}
     </h3>
-    <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+    <p class="text-gray-600 mb-6 line-clamp-3 leading-relaxed flex-grow">
       {description}
     </p>
     {tags.length > 0 && (
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2 mt-auto">
         {tags.map((tag) => (
-          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-full border border-gray-200 dark:border-gray-600">
+          <span class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-200">
             {tag}
           </span>
         ))}

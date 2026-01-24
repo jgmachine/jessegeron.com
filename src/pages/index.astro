@@ -1,14 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import AnimatedBackground from '../components/AnimatedBackground.astro';
 import { getCollection } from 'astro:content';
-import { Bot, Dices, BookOpen, GraduationCap } from 'lucide-astro';
+import { Bot, Dices, BookOpen, GraduationCap, ArrowRight, Sparkles } from 'lucide-astro';
 
 const allBlogPosts = await getCollection('blog');
 const recentPosts = allBlogPosts
   .filter(post => !post.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+  .slice(0, 6);
 
 const allProjects = await getCollection('projects');
 const featuredProjects = allProjects
@@ -21,146 +22,229 @@ const featuredAI = aiResources.filter(r => r.data.featured).slice(0, 2);
 ---
 
 <Layout title="Jesse Geron - K-12 Tech Leader & AI Enthusiast">
-  <!-- Hero Section -->
-  <section class="relative py-20 md:py-32">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-4xl mx-auto">
-        <div class="mb-6 inline-block px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full text-sm text-blue-600 dark:text-blue-400 font-medium">
+  <!-- Hero Section with Animated Background -->
+  <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <AnimatedBackground />
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+      <div class="text-center max-w-5xl mx-auto">
+        <div class="mb-8 inline-flex items-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-sm rounded-full text-sm text-blue-600 font-semibold border border-blue-200 shadow-lg shadow-blue-100/50">
+          <Sparkles size={18} class="text-blue-500" />
           Welcome to my digital space
         </div>
-        <h1 class="text-5xl sm:text-6xl md:text-7xl font-black mb-6 text-gray-900 dark:text-white">
-          Jesse Geron
+        
+        <h1 class="text-6xl sm:text-7xl md:text-8xl font-black mb-8 tracking-tight">
+          <span class="gradient-text">Jesse Geron</span>
         </h1>
-        <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4 font-semibold">
+        
+        <p class="text-2xl md:text-3xl text-gray-800 mb-6 font-bold">
           K-12 Tech Leader • Developer • AI Enthusiast
         </p>
-        <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
-          A place for thoughts on education technology, AI, web development, and personal interests
-          including tabletop gaming and mountain biking.
+        
+        <p class="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+          Exploring the intersection of education technology, artificial intelligence, and web development.
+          Plus thoughts on tabletop gaming and mountain biking adventures.
         </p>
-        <div class="flex flex-wrap gap-4 justify-center">
-          <a href="/ai-resources" class="btn-primary hover-lift">
-            Explore AI Resources
+        
+        <div class="flex flex-wrap gap-6 justify-center">
+          <a href="#latest-posts" class="btn-primary hover-lift inline-flex items-center gap-2">
+            Read Latest Posts
+            <ArrowRight size={20} />
           </a>
-          <a href="/projects" class="btn-secondary hover-lift">
-            View Projects
+          <a href="/ai-resources" class="btn-secondary hover-lift">
+            Explore AI Resources
           </a>
         </div>
       </div>
     </div>
-
+    
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <div class="w-6 h-10 border-2 border-gray-400 rounded-full flex items-start justify-center p-2">
+        <div class="w-1 h-3 bg-gray-400 rounded-full"></div>
+      </div>
+    </div>
   </section>
 
   <!-- What I Do Section -->
-  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="card card-hover rounded-xl p-8 hover-lift">
-        <div class="mb-4 text-indigo-600 dark:text-indigo-400">
-          <GraduationCap size={48} />
-        </div>
-        <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">K-12 Technology Leader</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          Leading technology initiatives in K-12 education, making IT work better for schools and students.
-        </p>
+  <section class="section-padding bg-gradient-to-br from-gray-50 to-blue-50/30">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl md:text-6xl font-black mb-6 text-gray-900">
+          What I <span class="gradient-text">Do</span>
+        </h2>
       </div>
-      <div class="card card-hover rounded-xl p-8 hover-lift">
-        <div class="mb-4 text-blue-600 dark:text-blue-400">
-          <Bot size={48} />
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card card-hover p-10 text-center hover-lift bg-white">
+          <div class="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-50 text-indigo-600">
+            <GraduationCap size={40} />
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-gray-900">K-12 Technology Leader</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Leading technology initiatives in K-12 education, making IT work better for schools and students.
+          </p>
         </div>
-        <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">AI & Development</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          Building modern web applications and exploring the frontier of AI technologies and their applications.
-        </p>
-      </div>
-      <div class="card card-hover rounded-xl p-8 hover-lift">
-        <div class="mb-4 text-purple-600 dark:text-purple-400">
-          <Dices size={48} />
+        
+        <div class="card card-hover p-10 text-center hover-lift bg-white">
+          <div class="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 text-blue-600">
+            <Bot size={40} />
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-gray-900">AI & Development</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Building modern web applications and exploring the frontier of AI technologies and their applications.
+          </p>
         </div>
-        <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Life & Hobbies</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          Tabletop gaming enthusiast and mountain biker exploring the trails and tabletops.
-        </p>
+        
+        <div class="card card-hover p-10 text-center hover-lift bg-white">
+          <div class="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 text-purple-600">
+            <Dices size={40} />
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-gray-900">Life & Hobbies</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Tabletop gaming enthusiast and mountain biker exploring the trails and tabletops.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Featured AI Resources -->
   {featuredAI.length > 0 && (
-    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Featured AI Resources</h2>
-        <a href="/ai-resources" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition flex items-center gap-2 font-medium">
-          View all <span>→</span>
-        </a>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {featuredAI.map((resource) => (
-          <Card
-            title={resource.data.title}
-            description={resource.data.description}
-            href={`/ai-resources/${resource.slug}`}
-            tags={[resource.data.type, resource.data.topic]}
-          />
-        ))}
+    <section class="section-padding bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-12">
+          <h2 class="text-4xl md:text-5xl font-black text-gray-900">
+            Featured <span class="gradient-text">AI Resources</span>
+          </h2>
+          <a href="/ai-resources" class="text-blue-600 hover:text-blue-700 transition flex items-center gap-2 font-semibold hover-lift">
+            View all 
+            <ArrowRight size={20} />
+          </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {featuredAI.map((resource) => (
+            <Card
+              title={resource.data.title}
+              description={resource.data.description}
+              href={`/ai-resources/${resource.slug}`}
+              tags={[resource.data.type, resource.data.topic]}
+            />
+          ))}
+        </div>
       </div>
     </section>
   )}
 
   <!-- Featured Projects -->
   {featuredProjects.length > 0 && (
-    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Featured Projects</h2>
-        <a href="/projects" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition flex items-center gap-2 font-medium">
-          View all <span>→</span>
-        </a>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {featuredProjects.map((project) => (
-          <Card
-            title={project.data.title}
-            description={project.data.description}
-            href={`/projects/${project.slug}`}
-            tags={project.data.tags}
-          />
-        ))}
+    <section class="section-padding bg-gradient-to-br from-blue-50/50 to-indigo-50/30">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-12">
+          <h2 class="text-4xl md:text-5xl font-black text-gray-900">
+            Featured <span class="gradient-text">Projects</span>
+          </h2>
+          <a href="/projects" class="text-blue-600 hover:text-blue-700 transition flex items-center gap-2 font-semibold hover-lift">
+            View all
+            <ArrowRight size={20} />
+          </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {featuredProjects.map((project) => (
+            <Card
+              title={project.data.title}
+              description={project.data.description}
+              href={`/projects/${project.slug}`}
+              tags={project.data.tags}
+            />
+          ))}
+        </div>
       </div>
     </section>
   )}
 
-  <!-- Recent Blog Posts -->
-  {recentPosts.length > 0 && (
-    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Latest from the Blog</h2>
-        <a href="/blog" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition flex items-center gap-2 font-medium">
-          View all <span>→</span>
+  <!-- Recent Blog Posts - Featured Section -->
+  <section id="latest-posts" class="section-padding bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl md:text-6xl font-black mb-6 text-gray-900">
+          Latest <span class="gradient-text">Insights</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Thoughts on education technology, AI, development, and everything in between
+        </p>
+      </div>
+      
+      {recentPosts.length > 0 && (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {recentPosts.map((post) => (
+            <article class="group">
+              <a href={`/blog/${post.slug}`} class="block">
+                <div class="card card-hover h-full p-8">
+                  <div class="flex items-center gap-3 mb-4">
+                    <time class="text-sm font-semibold text-blue-600">
+                      {post.data.pubDate.toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                      })}
+                    </time>
+                    <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full">
+                      {post.data.category}
+                    </span>
+                  </div>
+                  
+                  <h3 class="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 leading-tight">
+                    {post.data.title}
+                  </h3>
+                  
+                  <p class="text-gray-600 mb-6 line-clamp-3 leading-relaxed">
+                    {post.data.description}
+                  </p>
+                  
+                  <div class="flex flex-wrap gap-2 mb-6">
+                    {post.data.tags.slice(0, 3).map((tag) => (
+                      <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full border border-gray-200">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div class="flex items-center text-blue-600 font-semibold group-hover:gap-3 gap-2 transition-all">
+                    Read more
+                    <ArrowRight size={18} class="group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      )}
+      
+      <div class="text-center mt-12">
+        <a href="/blog" class="btn-primary hover-lift inline-flex items-center gap-2">
+          View All Posts
+          <ArrowRight size={20} />
         </a>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {recentPosts.map((post) => (
-          <Card
-            title={post.data.title}
-            description={post.data.description}
-            href={`/blog/${post.slug}`}
-            tags={post.data.tags}
-            date={post.data.pubDate}
-          />
-        ))}
-      </div>
-    </section>
-  )}
+    </div>
+  </section>
 
   <!-- CTA Section -->
-  <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="card rounded-2xl p-12 text-center bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-100 dark:border-blue-800">
-      <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Let's Connect</h2>
-      <p class="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-        Interested in K-12 tech, AI, or just want to chat about tabletop games and bikes?
-      </p>
-      <a href="/about" class="inline-block btn-primary hover-lift">
-        Get in Touch
-      </a>
+  <section class="section-padding bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="card p-16 text-center bg-gradient-to-br from-blue-600 to-indigo-600 border-0 shadow-2xl shadow-blue-500/30">
+        <h2 class="text-5xl font-black mb-6 text-white">
+          Let's Connect
+        </h2>
+        <p class="text-xl text-blue-50 mb-10 max-w-2xl mx-auto leading-relaxed">
+          Interested in K-12 tech, AI, or just want to chat about tabletop games and bikes?
+        </p>
+        <a href="/about" class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-blue-600 font-bold px-10 py-5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1">
+          Get in Touch
+          <ArrowRight size={20} />
+        </a>
+      </div>
     </div>
   </section>
 </Layout>

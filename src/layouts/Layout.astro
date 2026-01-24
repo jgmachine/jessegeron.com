@@ -19,53 +19,53 @@ const { title, description = "Jesse Geron's portfolio - K-12 Technology Leader, 
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <body class="bg-white text-gray-900 min-h-screen">
     <div class="relative min-h-screen flex flex-col">
-      <header class="bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800 backdrop-blur-sm sticky top-0 z-50">
+      <header class="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <a href="/" class="text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <div class="flex items-center justify-between h-20">
+            <a href="/" class="text-2xl font-black text-gray-900 hover:text-blue-600 transition-colors">
               Jesse Geron
             </a>
-            <div class="hidden md:flex gap-8 items-center">
-              <a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+            <div class="hidden md:flex gap-10 items-center">
+              <a href="/blog" class="text-gray-700 hover:text-blue-600 transition-colors font-semibold">
                 Blog
               </a>
-              <a href="/reading" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+              <a href="/reading" class="text-gray-700 hover:text-blue-600 transition-colors font-semibold">
                 Reading
               </a>
               <div class="relative group">
-                <button class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+                <button class="text-gray-700 hover:text-blue-600 transition-colors font-semibold">
                   Work
                   <span class="ml-1">▾</span>
                 </button>
-                <div class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <a href="/ai-resources" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-t-lg transition">
+                <div class="absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <a href="/ai-resources" class="block px-6 py-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-t-2xl transition font-medium">
                     AI Resources
                   </a>
-                  <a href="/projects" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                  <a href="/projects" class="block px-6 py-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition font-medium">
                     Projects
                   </a>
-                  <a href="/work-docs" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-b-lg transition">
+                  <a href="/work-docs" class="block px-6 py-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-b-2xl transition font-medium">
                     Work Docs
                   </a>
                 </div>
               </div>
               <div class="relative group">
-                <button class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+                <button class="text-gray-700 hover:text-blue-600 transition-colors font-semibold">
                   Play
                   <span class="ml-1">▾</span>
                 </button>
-                <div class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <a href="/board-games" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-t-lg transition">
+                <div class="absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <a href="/board-games" class="block px-6 py-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-t-2xl transition font-medium">
                     Tabletop Gaming
                   </a>
-                  <a href="/biking" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-b-lg transition">
+                  <a href="/biking" class="block px-6 py-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-b-2xl transition font-medium">
                     Mountain Biking
                   </a>
                 </div>
               </div>
-              <a href="/about" class="btn-primary hover-lift">
+              <a href="/about" class="btn-primary hover-lift text-sm px-6 py-2.5">
                 About
               </a>
             </div>
@@ -77,35 +77,35 @@ const { title, description = "Jesse Geron's portfolio - K-12 Technology Leader, 
         <slot />
       </main>
 
-      <footer class="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <footer class="bg-gradient-to-br from-gray-50 to-blue-50/30 border-t border-gray-200 mt-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             <div>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Jesse Geron</h3>
-              <p class="text-gray-600 dark:text-gray-400">K-12 Tech Leader, Developer, AI Enthusiast</p>
+              <h3 class="text-2xl font-black text-gray-900 mb-4">Jesse Geron</h3>
+              <p class="text-gray-600 leading-relaxed">K-12 Tech Leader, Developer, AI Enthusiast</p>
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Work</h3>
-              <ul class="space-y-2 text-gray-600 dark:text-gray-400">
-                <li><a href="/blog" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Blog</a></li>
-                <li><a href="/ai-resources" class="hover:text-blue-600 dark:hover:text-blue-400 transition">AI Resources</a></li>
-                <li><a href="/projects" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a></li>
-                <li><a href="/work-docs" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Work Docs</a></li>
+              <h3 class="text-lg font-bold text-gray-900 mb-5">Work</h3>
+              <ul class="space-y-3 text-gray-600">
+                <li><a href="/blog" class="hover:text-blue-600 transition font-medium">Blog</a></li>
+                <li><a href="/ai-resources" class="hover:text-blue-600 transition font-medium">AI Resources</a></li>
+                <li><a href="/projects" class="hover:text-blue-600 transition font-medium">Projects</a></li>
+                <li><a href="/work-docs" class="hover:text-blue-600 transition font-medium">Work Docs</a></li>
               </ul>
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Play</h3>
-              <ul class="space-y-2 text-gray-600 dark:text-gray-400">
-                <li><a href="/board-games" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Tabletop Gaming</a></li>
-                <li><a href="/biking" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Mountain Biking</a></li>
+              <h3 class="text-lg font-bold text-gray-900 mb-5">Play</h3>
+              <ul class="space-y-3 text-gray-600">
+                <li><a href="/board-games" class="hover:text-blue-600 transition font-medium">Tabletop Gaming</a></li>
+                <li><a href="/biking" class="hover:text-blue-600 transition font-medium">Mountain Biking</a></li>
               </ul>
             </div>
           </div>
-          <div class="text-center border-t border-gray-200 dark:border-gray-700 pt-8">
-            <p class="text-sm text-gray-600 dark:text-gray-400 italic mb-4">
+          <div class="text-center border-t border-gray-200 pt-10">
+            <p class="text-sm text-gray-600 italic mb-5 max-w-3xl mx-auto leading-relaxed">
               The views and opinions expressed on this site are my own and do not necessarily reflect the official policy or position of any organization I work for, unless explicitly stated otherwise.
             </p>
-            <p class="text-gray-500 dark:text-gray-500">&copy; {new Date().getFullYear()} Jesse Geron. Built with Astro & Tailwind CSS.</p>
+            <p class="text-gray-500 font-medium">&copy; {new Date().getFullYear()} Jesse Geron. Built with Astro & Tailwind CSS.</p>
           </div>
         </div>
       </footer>
