@@ -37,7 +37,7 @@ The Narrow Path is the thin sliver in the middle. This is where we use technolog
 
 This isn't just a tech conversation. It is a classroom conversation. In our schools, we are already seeing the ripples. We worry about students losing the ability to think critically or write original works. We are entering an era where students might not be able to trust their eyes or ears due to deepfakes. Furthermore, the mental health struggles and the need for companionship in this age group are real concerns that AI will only complicate.
 
-But here is the silver lining: Our students are keen. They are skeptical. They know the world is changing, and they are waiting for us to show them how to navigate it.
+**But here is the silver lining:** Our students are keen. They are skeptical. They know the world is changing, and they are waiting for us to show them how to navigate it.
 
 ## What We're Doing About It
 
