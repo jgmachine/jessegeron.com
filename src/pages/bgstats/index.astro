@@ -100,8 +100,8 @@ const maxPlays = Math.max(...playsByMonth.map(m => m.plays), 1);
     <!-- Plays by Month Chart -->
     {playsByMonth.length > 0 && (
       <div class="mt-12 bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-2xl font-bold text-gray-900">Plays by Month (Last 12 Months)</h2>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">Plays by Month<br class="sm:hidden" /><span class="sm:hidden text-lg"> </span>(Last 12 Months)</h2>
           <div class="flex items-center gap-4 text-sm">
             <div class="flex items-center gap-1.5">
               <div class="w-3 h-3 rounded-sm bg-green-500"></div>
