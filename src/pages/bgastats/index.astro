@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeaderBackground from "../../components/PageHeaderBackground.astro";
+import BGAStats from "../../components/BGAStats.astro";
+---
+
+<Layout title="BGA Stats">
+  <!-- Header with animated background -->
+  <section class="relative py-20 overflow-hidden">
+    <PageHeaderBackground />
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="text-center">
+        <h1 class="text-5xl sm:text-6xl font-black text-gray-900 mb-2">
+          Board Game Arena <span class="gradient-text">Stats</span>
+        </h1>
+        <p class="text-xl text-gray-600">
+          Online play statistics from <a href="https://boardgamearena.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">BoardGameArena</a>
+        </p>
+      </header>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <BGAStats />
+  </div>
+</Layout>

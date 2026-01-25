@@ -1,0 +1,180 @@
+---
+/**
+ * BoardGameArena Calendar Heatmap Component
+ *
+ * GitHub-style contribution calendar showing daily gaming activity.
+ * Color intensity shows number of games played, with win rate affecting hue.
+ */
+import type { BGAPlayHistoryEntry } from "../lib/bga";
+
+interface Props {
+  playHistory: BGAPlayHistoryEntry[];
+}
+
+const { playHistory } = Astro.props;
+
+// Build a map for quick lookup
+const historyMap = new Map<string, BGAPlayHistoryEntry>();
+playHistory.forEach((entry) => historyMap.set(entry.date, entry));
+
+// Calculate date range - show last 52 weeks (1 year)
+const today = new Date();
+const endDate = new Date(today);
+
+// Go back ~52 weeks and find the previous Sunday
+const startDate = new Date(today);
+startDate.setDate(startDate.getDate() - 364); // ~52 weeks
+while (startDate.getDay() !== 0) {
+  startDate.setDate(startDate.getDate() - 1);
+}
+
+// Generate all weeks (exactly 53 weeks to fill the grid)
+const weeks: Date[][] = [];
+let currentDate = new Date(startDate);
+
+for (let w = 0; w < 53; w++) {
+  const week: Date[] = [];
+  for (let d = 0; d < 7; d++) {
+    week.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  weeks.push(week);
+}
+
+// Get intensity level (0-4) based on game count
+function getIntensity(count: number): number {
+  if (count === 0) return 0;
+  if (count === 1) return 1;
+  if (count <= 3) return 2;
+  if (count <= 6) return 3;
+  return 4;
+}
+
+// Format date for display
+function formatDate(date: Date): string {
+  return date.toISOString().split("T")[0];
+}
+
+// Get month labels - only show each month once, positioned at first occurrence
+const monthLabels: { month: string; weekIndex: number }[] = [];
+let lastMonth = -1;
+weeks.forEach((week, index) => {
+  // Use the first day of the week that's in the new month
+  for (const day of week) {
+    const month = day.getMonth();
+    if (month !== lastMonth) {
+      monthLabels.push({
+        month: day.toLocaleDateString("en-US", { month: "short" }),
+        weekIndex: index,
+      });
+      lastMonth = month;
+      break;
+    }
+  }
+});
+
+// Calculate stats
+const totalGames = playHistory.reduce((sum, e) => sum + e.count, 0);
+const totalWins = playHistory.reduce((sum, e) => sum + e.wins, 0);
+const activeDays = playHistory.length;
+---
+
+<div class="bg-white rounded-lg p-5 border border-gray-200 shadow-sm">
+  <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+    <h3 class="text-lg font-bold text-gray-900">Activity</h3>
+    <div class="flex gap-4 text-xs text-gray-600">
+      <span><strong class="text-gray-900">{totalGames}</strong> games</span>
+      <span><strong class="text-emerald-600">{totalWins}</strong> wins</span>
+      <span><strong class="text-gray-900">{activeDays}</strong> active days</span>
+    </div>
+  </div>
+
+  <!-- Calendar container - no horizontal scroll -->
+  <div class="w-full">
+    <!-- Month labels row -->
+    <div class="flex ml-7 mb-1">
+      {weeks.map((_, weekIndex) => {
+        const label = monthLabels.find((m) => m.weekIndex === weekIndex);
+        return (
+          <div class="flex-1 min-w-0 text-xs text-gray-500">
+            {label ? label.month : ""}
+          </div>
+        );
+      })}
+    </div>
+
+    <div class="flex">
+      <!-- Day labels -->
+      <div class="flex flex-col pr-1 text-[10px] text-gray-400 w-6 flex-shrink-0">
+        <div class="h-[11px]"></div>
+        <div class="h-[11px] flex items-center">Mon</div>
+        <div class="h-[11px]"></div>
+        <div class="h-[11px] flex items-center">Wed</div>
+        <div class="h-[11px]"></div>
+        <div class="h-[11px] flex items-center">Fri</div>
+        <div class="h-[11px]"></div>
+      </div>
+
+      <!-- Calendar grid - use flex-1 so it fills available space -->
+      <div class="flex-1 flex gap-[2px]">
+        {weeks.map((week) => (
+          <div class="flex-1 flex flex-col gap-[2px]">
+            {week.map((date) => {
+              const dateStr = formatDate(date);
+              const entry = historyMap.get(dateStr);
+              const count = entry?.count || 0;
+              const wins = entry?.wins || 0;
+              const intensity = getIntensity(count);
+              const isFuture = date > today;
+              const winRate = count > 0 ? Math.round((wins / count) * 100) : 0;
+
+              // Color based on intensity and win rate
+              const colors = [
+                "bg-gray-100", // 0 games
+                winRate >= 50 ? "bg-emerald-200" : "bg-blue-200", // 1 game
+                winRate >= 50 ? "bg-emerald-300" : "bg-blue-300", // 2-3 games
+                winRate >= 50 ? "bg-emerald-400" : "bg-blue-400", // 4-6 games
+                winRate >= 50 ? "bg-emerald-500" : "bg-blue-500", // 7+ games
+              ];
+
+              const games = entry?.games || [];
+              const tooltip = count > 0
+                ? `${dateStr}: ${count} game${count > 1 ? "s" : ""}, ${wins} win${wins !== 1 ? "s" : ""} - ${games.join(", ")}`
+                : `${dateStr}: No games`;
+
+              return (
+                <div
+                  class={`aspect-square rounded-sm ${isFuture ? "bg-gray-50" : colors[intensity]} cursor-pointer transition-transform hover:scale-125 hover:ring-1 hover:ring-gray-400`}
+                  title={tooltip}
+                  data-date={dateStr}
+                  data-count={count}
+                />
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="flex items-center justify-between mt-3 text-[10px] text-gray-500 flex-wrap gap-2">
+      <div class="flex items-center gap-1">
+        <span class="text-emerald-500">●</span>
+        <span>Win rate ≥ 50%</span>
+        <span class="text-blue-500 ml-2">●</span>
+        <span>Win rate &lt; 50%</span>
+      </div>
+      <div class="flex items-center gap-1">
+        <span>Less</span>
+        <div class="flex gap-[2px]">
+          <div class="w-[10px] h-[10px] rounded-sm bg-gray-100" />
+          <div class="w-[10px] h-[10px] rounded-sm bg-emerald-200" />
+          <div class="w-[10px] h-[10px] rounded-sm bg-emerald-300" />
+          <div class="w-[10px] h-[10px] rounded-sm bg-emerald-400" />
+          <div class="w-[10px] h-[10px] rounded-sm bg-emerald-500" />
+        </div>
+        <span>More</span>
+      </div>
+    </div>
+  </div>
+</div>
