@@ -4,9 +4,11 @@ author: "Dennis E. Taylor"
 description: "A software engineer dies and wakes up as an AI controlling a Von Neumann probe, tasked with exploring and replicating across the galaxy."
 category: "Fiction"
 workPlayCategory: "Play"
-tags: ["sci-fi", "AI", "space-exploration", "humor"]
+tags: ["sci-fi", "ai", "humor"]
 status: "read"
 recommended: true
+asin: "1680680587"
+coverUrl: "/images/books/bobiverse.jpg"
 ---
 
 A delightful sci-fi series that takes the concept of Von Neumann probes (self-replicating machines) and runs with it in the best way possible. Bob Johanson, a software engineer, dies and has his consciousness uploaded to become the controlling AI of a space probe designed to explore and replicate itself across the galaxy.

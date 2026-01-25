@@ -2,7 +2,15 @@
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
 import PageHeaderBackground from '../../components/PageHeaderBackground.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { getCollection } from 'astro:content';
+
+const AFFILIATE_TAG = 'jgeron-20';
+
+// Helper to generate Amazon affiliate link
+function getAmazonLink(asin: string) {
+  return `https://www.amazon.com/dp/${asin}?tag=${AFFILIATE_TAG}`;
+}
 
 const allBooks = await getCollection('books');
 
@@ -44,69 +52,74 @@ const toRead = books.filter(b => b.data.status === 'to-read');
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
     <!-- Filter Section -->
-    <div class="mb-12 p-8 bg-white rounded-2xl shadow-sm border border-gray-200">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-xl font-bold text-gray-900">Filter by Topic</h2>
-        <button id="clearFilters" class="hidden text-sm text-blue-600 hover:underline">
-          Clear Filters
+    <div class="mb-8 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="flex items-center justify-between">
+        <button id="toggleFilters" class="flex items-center gap-2 text-base font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+          <svg id="filterChevron" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+          Filters
+        </button>
+        <button id="clearFilters" class="hidden text-xs text-blue-600 hover:underline">
+          Clear All
         </button>
       </div>
       
-      <div class="flex flex-wrap gap-3 mb-8">
-        <button
-          data-filter-type="all"
-          class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-blue-600 text-white shadow-sm"
-        >
-          All Books
-        </button>
-        {workPlayCategories.map((wpCat) => (
+      <div id="filterContent" class="space-y-2 mt-3 hidden">
+        <!-- Topic & Status in one line -->
+        <div class="flex flex-wrap gap-2 items-center">
           <button
-            data-filter-type="workplay"
-            data-filter-value={wpCat}
-            class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-gray-100 text-gray-900 hover:bg-gray-200"
+            data-filter-type="all"
+            class="filter-btn px-3 py-1 rounded-full text-xs font-medium transition bg-blue-600 text-white"
           >
-            {wpCat}
+            All Books
           </button>
-        ))}
-      </div>
+          {workPlayCategories.map((wpCat) => (
+            <button
+              data-filter-type="workplay"
+              data-filter-value={wpCat}
+              class="filter-btn px-3 py-1 rounded-full text-xs font-medium transition bg-gray-100 text-gray-900 hover:bg-gray-200"
+            >
+              {wpCat}
+            </button>
+          ))}
+          <span class="text-gray-300">|</span>
+          {statuses.map((status) => (
+            <button
+              data-filter-type="status"
+              data-filter-value={status}
+              class="filter-btn px-3 py-1 rounded-full text-xs font-medium border transition bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100"
+            >
+              {status === 'reading' ? 'Reading' : status === 'to-read' ? 'Want' : 'Read'}
+            </button>
+          ))}
+        </div>
 
-      <h3 class="text-base font-bold text-gray-900 mb-4">Categories</h3>
-      <div class="flex flex-wrap gap-2 mb-8">
-        {allCategories.map((category) => (
-          <button
-            data-filter-type="category"
-            data-filter-value={category}
-            class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-700 border border-gray-200 hover:border-blue-200"
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+        <!-- Categories -->
+        <div class="flex flex-wrap gap-1.5">
+          {allCategories.map((category) => (
+            <button
+              data-filter-type="category"
+              data-filter-value={category}
+              class="filter-btn px-2.5 py-1 rounded text-xs font-medium transition bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-700 border border-gray-200 hover:border-blue-200"
+            >
+              {category}
+            </button>
+          ))}
+        </div>
 
-      <h3 class="text-base font-bold text-gray-900 mb-4">Status</h3>
-      <div class="flex flex-wrap gap-2 mb-8">
-        {statuses.map((status) => (
-          <button
-            data-filter-type="status"
-            data-filter-value={status}
-            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border transition bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100"
-          >
-            {status === 'reading' ? 'Currently Reading' : status === 'to-read' ? 'Want to Read' : 'Have Read'}
-          </button>
-        ))}
-      </div>
-
-      <h3 class="text-base font-bold text-gray-900 mb-4">Tags</h3>
-      <div class="flex flex-wrap gap-2">
-        {allTags.map((tag) => (
-          <button
-            data-filter-type="tag"
-            data-filter-value={tag}
-            class="filter-btn px-4 py-2 rounded-full text-sm font-medium border transition bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
-          >
-            #{tag}
-          </button>
-        ))}
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-1.5">
+          {allTags.map((tag) => (
+            <button
+              data-filter-type="tag"
+              data-filter-value={tag}
+              class="filter-btn px-2.5 py-1 rounded text-xs font-medium border transition bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
+            >
+              #{tag}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
 
@@ -125,8 +138,13 @@ const toRead = books.filter(b => b.data.status === 'to-read');
           >
             <article class="card card-hover p-8 h-full">
               <div class="flex items-start gap-4">
-                {book.data.coverImage && (
-                  <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
+                {book.data.coverUrl && (
+                  <img
+                    src={book.data.coverUrl}
+                    alt={book.data.title}
+                    class="w-16 h-24 object-cover rounded shadow-sm"
+                    loading="lazy"
+                  />
                 )}
                 <div class="flex-1">
                   <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
@@ -159,8 +177,13 @@ const toRead = books.filter(b => b.data.status === 'to-read');
           >
             <article class="card card-hover p-8 h-full">
               <div class="flex items-start gap-4">
-                {book.data.coverImage && (
-                  <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
+                {book.data.coverUrl && (
+                  <img
+                    src={book.data.coverUrl}
+                    alt={book.data.title}
+                    class="w-16 h-24 object-cover rounded shadow-sm"
+                    loading="lazy"
+                  />
                 )}
                 <div class="flex-1">
                   <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
@@ -190,8 +213,13 @@ const toRead = books.filter(b => b.data.status === 'to-read');
           >
             <article class="card card-hover p-8 h-full">
               <div class="flex items-start gap-4">
-                {book.data.coverImage && (
-                  <img src={book.data.coverImage} alt={book.data.title} class="w-16 h-24 object-cover rounded" />
+                {book.data.coverUrl && (
+                  <img
+                    src={book.data.coverUrl}
+                    alt={book.data.title}
+                    class="w-16 h-24 object-cover rounded shadow-sm"
+                    loading="lazy"
+                  />
                 )}
                 <div class="flex-1">
                   <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
@@ -220,6 +248,16 @@ const toRead = books.filter(b => b.data.status === 'to-read');
     status: null as string | null,
     tag: null as string | null
   };
+
+  // Toggle filter panel
+  const toggleBtn = document.getElementById('toggleFilters');
+  const filterContent = document.getElementById('filterContent');
+  const filterChevron = document.getElementById('filterChevron');
+  
+  toggleBtn?.addEventListener('click', () => {
+    filterContent?.classList.toggle('hidden');
+    filterChevron?.classList.toggle('rotate-180');
+  });
 
   function applyFilters() {
     const books = document.querySelectorAll('.book-card');
@@ -322,3 +360,10 @@ const toRead = books.filter(b => b.data.status === 'to-read');
   // Apply filters on page load
   applyFilters();
 </script>
+
+<!-- Affiliate Disclosure Footer -->
+<footer class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+  <div class="text-center">
+    <AffiliateDisclosure variant="compact" />
+  </div>
+</footer>

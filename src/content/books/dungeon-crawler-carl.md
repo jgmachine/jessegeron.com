@@ -4,9 +4,11 @@ author: "Matt Dinniman"
 description: "Earth is destroyed and turned into a dungeon crawl game show for the universe. Carl and his ex-girlfriend's cat Donut must fight their way through to survive."
 category: "Fiction"
 workPlayCategory: "Play"
-tags: ["sci-fi", "litrpg", "humor", "audiobook"]
+tags: ["litrpg", "audiobook"]
 status: "reading"
 recommended: true
+asin: "B08BKGYQXW"
+coverUrl: "/images/books/dungeon-crawler-carl.jpg"
 ---
 
 An absolutely phenomenal LitRPG series that starts with Earth being destroyed and converted into a dungeon crawl game show for alien entertainment. Carl, caught outside in his underwear when it happens, teams up with Princess Donut - his ex-girlfriend's talking cat - to survive the deadly floors of the dungeon.

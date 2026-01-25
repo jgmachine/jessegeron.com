@@ -1,0 +1,21 @@
+---
+interface Props {
+  variant?: 'full' | 'compact';
+}
+
+const { variant = 'full' } = Astro.props;
+---
+
+{variant === 'full' ? (
+  <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
+    <p class="font-medium mb-1">Affiliate Disclosure</p>
+    <p>
+      As an Amazon Associate I earn from qualifying purchases. Book links on this page are affiliate links,
+      meaning I may receive a small commission at no extra cost to you if you purchase through them.
+    </p>
+  </div>
+) : (
+  <p class="text-xs text-gray-500 italic">
+    As an Amazon Associate I earn from qualifying purchases.
+  </p>
+)}

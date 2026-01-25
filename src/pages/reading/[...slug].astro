@@ -1,8 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHeaderBackground from '../../components/PageHeaderBackground.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { getCollection } from 'astro:content';
 import Comments from '../../components/Comments.astro';
+
+const AFFILIATE_TAG = 'jgeron-20';
+
+// Helper to generate Amazon affiliate link
+function getAmazonLink(asin: string) {
+  return `https://www.amazon.com/dp/${asin}?tag=${AFFILIATE_TAG}`;
+}
 
 export async function getStaticPaths() {
   const bookEntries = await getCollection('books');
@@ -26,61 +34,78 @@ const { Content } = await entry.render();
       </a>
 
       <div class="flex flex-col md:flex-row gap-8">
-        {entry.data.coverImage && (
+        {entry.data.coverUrl && (
           <div class="flex-shrink-0">
-            <img 
-              src={entry.data.coverImage} 
-              alt={entry.data.title}
-              class="w-48 h-72 object-cover rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
-            />
+            {entry.data.asin ? (
+              <a
+                href={getAmazonLink(entry.data.asin)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block hover:opacity-90 transition-opacity"
+              >
+                <img
+                  src={entry.data.coverUrl}
+                  alt={entry.data.title}
+                  class="w-48 h-72 object-cover rounded-lg shadow-lg border border-gray-200"
+                  loading="lazy"
+                />
+              </a>
+            ) : (
+              <img
+                src={entry.data.coverUrl}
+                alt={entry.data.title}
+                class="w-48 h-72 object-cover rounded-lg shadow-lg border border-gray-200"
+                loading="lazy"
+              />
+            )}
           </div>
         )}
 
         <div class="flex-1">
-          <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-3">
+          <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-3">
             {entry.data.title}
           </h1>
-          
-          <p class="text-xl text-gray-700 dark:text-gray-300 mb-4">
+
+          <p class="text-xl text-gray-700 mb-4">
             by {entry.data.author}
           </p>
 
           <div class="flex flex-wrap items-center gap-3 mb-6">
-            <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium">
+            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
               {entry.data.category}
             </span>
-            
-            <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-800">
+
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium border border-blue-200">
               {entry.data.workPlayCategory}
             </span>
 
             {entry.data.status === 'reading' && (
-              <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm font-medium">
+              <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
                 Currently Reading
               </span>
             )}
           </div>
 
           {entry.data.dateRead && (
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-sm text-gray-600 mb-4">
               Read: {entry.data.dateRead.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
             </p>
           )}
 
           <div class="flex flex-wrap gap-2 mb-6">
             {entry.data.tags.map((tag) => (
-              <a 
+              <a
                 href={`/reading?tag=${encodeURIComponent(tag)}`}
-                class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm rounded-full border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition"
+                class="px-3 py-1 bg-blue-50 text-blue-700 text-sm rounded-full border border-blue-200 hover:bg-blue-100 transition"
               >
                 #{tag}
               </a>
             ))}
           </div>
 
-          {entry.data.amazonLink && (
-            <a 
-              href={entry.data.amazonLink}
+          {entry.data.asin && (
+            <a
+              href={getAmazonLink(entry.data.asin)}
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
@@ -95,19 +120,26 @@ const { Content } = await entry.render();
 
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
 
-    <div class="prose prose-lg dark:prose-invert max-w-none
-                prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
-                prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed
-                prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-semibold
-                prose-ul:text-gray-700 dark:prose-ul:text-gray-300
-                prose-ol:text-gray-700 dark:prose-ol:text-gray-300
+    <div class="prose prose-lg max-w-none
+                prose-headings:font-bold prose-headings:text-gray-900
+                prose-p:text-gray-700 prose-p:leading-relaxed
+                prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
+                prose-strong:text-gray-900 prose-strong:font-semibold
+                prose-ul:text-gray-700
+                prose-ol:text-gray-700
                 prose-li:my-1
-                prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
-                prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-700 dark:prose-pre:border-gray-800 prose-pre:shadow-lg
-                prose-blockquote:border-l-blue-600 dark:prose-blockquote:border-l-blue-400 prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-blue-900/10 prose-blockquote:py-1 prose-blockquote:px-4">
+                prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
+                prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-700 prose-pre:shadow-lg
+                prose-blockquote:border-l-blue-600 prose-blockquote:bg-blue-50 prose-blockquote:py-1 prose-blockquote:px-4">
       <Content />
     </div>
+
+    <!-- Affiliate Disclosure -->
+    {entry.data.asin && (
+      <div class="mt-8 pt-8 border-t border-gray-200">
+        <AffiliateDisclosure variant="compact" />
+      </div>
+    )}
 
     <Comments />
 

@@ -4,10 +4,12 @@ author: "Liz Wiseman"
 description: "Exploring the difference between leaders who amplify team intelligence versus those who diminish it."
 category: "Leadership"
 workPlayCategory: "Work"
-tags: ["leadership", "management", "team-building", "professional-development"]
+tags: ["leadership", "management"]
 status: "read"
 dateRead: 2024-03-15
 recommended: true
+asin: "0062663070"
+coverUrl: "/images/books/multipliers.jpg"
 ---
 
 A transformative look at leadership that fundamentally changed how I think about bringing out the best in my team. I won this book during a contest at the San Diego County Office of Education K12 Project Management conference, and it turned out to be one of the most impactful leadership books I've read.

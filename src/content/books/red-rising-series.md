@@ -4,9 +4,11 @@ author: "Pierce Brown"
 description: "In a color-coded dystopian future, Darrow infiltrates the elite Golds to bring down the oppressive society from within."
 category: "Fiction"
 workPlayCategory: "Play"
-tags: ["sci-fi", "dystopian", "action", "space-opera"]
+tags: ["sci-fi", "dystopian"]
 status: "read"
 recommended: true
+asin: "034553980X"
+coverUrl: "/images/books/red-rising.jpg"
 ---
 
 A fantastic sci-fi series set in a future where humanity is divided into a color-coded caste system, with the Golds ruling over all. Darrow, a Red from the lowest caste, infiltrates the elite Gold academy to bring down the system from within.

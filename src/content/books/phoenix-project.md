@@ -4,10 +4,12 @@ author: "Gene Kim, Kevin Behr, George Spafford"
 description: "A novel about IT, DevOps, and helping your business win."
 category: "IT/Tech"
 workPlayCategory: "Work"
-tags: ["devops", "it-management", "operations", "kanban"]
+tags: ["devops"]
 status: "read"
 dateRead: 2020-06-15
 recommended: true
+asin: "1942788290"
+coverUrl: "/images/books/phoenix-project.jpg"
 ---
 
 A fantastic read that presents IT management principles through a compelling narrative. Following an IT manager tasked with rescuing a critical project, this book illustrates DevOps concepts in an accessible way.
