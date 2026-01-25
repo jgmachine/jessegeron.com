@@ -17,22 +17,23 @@ const { playHistory } = Astro.props;
 const historyMap = new Map<string, BGAPlayHistoryEntry>();
 playHistory.forEach((entry) => historyMap.set(entry.date, entry));
 
-// Calculate date range - show last 52 weeks (1 year)
+// Calculate date range - show last 12 months starting from the 1st of that month
 const today = new Date();
 const endDate = new Date(today);
 
-// Go back ~52 weeks and find the previous Sunday
-const startDate = new Date(today);
-startDate.setDate(startDate.getDate() - 364); // ~52 weeks
+// Start from the 1st of the month, 12 months ago
+const startDate = new Date(today.getFullYear(), today.getMonth() - 11, 1);
+
+// Adjust to start on a Sunday
 while (startDate.getDay() !== 0) {
   startDate.setDate(startDate.getDate() - 1);
 }
 
-// Generate all weeks (exactly 53 weeks to fill the grid)
+// Generate all weeks until today
 const weeks: Date[][] = [];
 let currentDate = new Date(startDate);
 
-for (let w = 0; w < 53; w++) {
+while (currentDate <= today) {
   const week: Date[] = [];
   for (let d = 0; d < 7; d++) {
     week.push(new Date(currentDate));
@@ -55,19 +56,25 @@ function formatDate(date: Date): string {
   return date.toISOString().split("T")[0];
 }
 
-// Get month labels - only show each month once, positioned at first occurrence
+// Get month labels - only show when there's room (at least 4 weeks between labels)
 const monthLabels: { month: string; weekIndex: number }[] = [];
-let lastMonth = -1;
+let lastLabeledMonth = -1;
+let lastLabelWeekIndex = -10; // Start far back so first label shows
+
 weeks.forEach((week, index) => {
-  // Use the first day of the week that's in the new month
+  // Check if any day in this week starts a new month
   for (const day of week) {
-    const month = day.getMonth();
-    if (month !== lastMonth) {
-      monthLabels.push({
-        month: day.toLocaleDateString("en-US", { month: "short" }),
-        weekIndex: index,
-      });
-      lastMonth = month;
+    if (day.getDate() <= 7) { // First week of the month
+      const month = day.getMonth();
+      // Only add label if it's a new month AND we have at least 4 weeks since last label
+      if (month !== lastLabeledMonth && (index - lastLabelWeekIndex) >= 4) {
+        monthLabels.push({
+          month: day.toLocaleDateString("en-US", { month: "short" }),
+          weekIndex: index,
+        });
+        lastLabeledMonth = month;
+        lastLabelWeekIndex = index;
+      }
       break;
     }
   }
@@ -89,15 +96,19 @@ const activeDays = playHistory.length;
     </div>
   </div>
 
-  <!-- Calendar container - no horizontal scroll -->
+  <!-- Calendar container -->
   <div class="w-full">
     <!-- Month labels row -->
-    <div class="flex ml-7 mb-1">
-      {weeks.map((_, weekIndex) => {
-        const label = monthLabels.find((m) => m.weekIndex === weekIndex);
+    <div class="flex ml-7 mb-1 relative h-4">
+      {monthLabels.map(({ month, weekIndex }) => {
+        // Calculate position as percentage
+        const leftPercent = (weekIndex / weeks.length) * 100;
         return (
-          <div class="flex-1 min-w-0 text-xs text-gray-500">
-            {label ? label.month : ""}
+          <div
+            class="absolute text-xs text-gray-500"
+            style={`left: ${leftPercent}%`}
+          >
+            {month}
           </div>
         );
       })}
