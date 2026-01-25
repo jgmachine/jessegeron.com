@@ -1,0 +1,244 @@
+---
+/**
+ * BoardGameArena Stats Component
+ *
+ * Displays BGA player statistics including ELO ratings, arena rankings, and win rates.
+ */
+import { getBGAStats, getTopGamesByElo, getMostPlayedGames, getOverallWinRate, getDataFreshness } from "../lib/bga";
+import BGACalendarHeatmap from "./BGACalendarHeatmap.astro";
+
+const stats = await getBGAStats();
+const topByElo = getTopGamesByElo(stats, 5);
+const mostPlayed = getMostPlayedGames(stats, 5);
+const overallWinRate = getOverallWinRate(stats);
+const freshness = getDataFreshness(stats);
+const playHistory = stats.playHistory || [];
+
+// Arena color mapping
+const arenaColors: Record<string, { bg: string; text: string; border: string }> = {
+  Gold: { bg: "bg-yellow-100", text: "text-yellow-800", border: "border-yellow-300" },
+  Silver: { bg: "bg-gray-100", text: "text-gray-700", border: "border-gray-300" },
+  Bronze: { bg: "bg-orange-100", text: "text-orange-800", border: "border-orange-300" },
+};
+---
+
+<div class="space-y-8">
+  <!-- Header with player info and last updated -->
+  <div class="flex items-center justify-between flex-wrap gap-2">
+    <div>
+      <p class="text-sm text-gray-600">
+        <a
+          href={`https://boardgamearena.com/player?id=${stats.playerId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-600 hover:text-blue-800 underline"
+        >
+          {stats.playerName} on BGA
+        </a>
+      </p>
+    </div>
+    <span class="text-xs text-gray-500">
+      Last updated: {new Date(stats.fetchedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+    </span>
+  </div>
+
+  <!-- Summary Stats Grid -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    {stats.totals.matches !== undefined && (
+      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+        <p class="text-gray-600 text-xs uppercase tracking-wider">Total Matches</p>
+        <p class="text-2xl font-bold text-gray-900 mt-1">{stats.totals.matches}</p>
+      </div>
+    )}
+
+    {stats.totals.wins !== undefined && (
+      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+        <p class="text-gray-600 text-xs uppercase tracking-wider">Total Wins</p>
+        <p class="text-2xl font-bold text-green-600 mt-1">{stats.totals.wins}</p>
+      </div>
+    )}
+
+    {overallWinRate !== null && (
+      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+        <p class="text-gray-600 text-xs uppercase tracking-wider">Win Rate</p>
+        <p class="text-2xl font-bold text-blue-600 mt-1">{overallWinRate}%</p>
+      </div>
+    )}
+
+    {stats.totals.reputation !== undefined && (
+      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+        <p class="text-gray-600 text-xs uppercase tracking-wider">Karma</p>
+        <p class="text-2xl font-bold text-purple-600 mt-1">{stats.totals.reputation}</p>
+      </div>
+    )}
+  </div>
+
+  <!-- Activity Calendar Heatmap -->
+  {playHistory.length > 0 && (
+    <BGACalendarHeatmap playHistory={playHistory} />
+  )}
+
+  <!-- Game Stats Tables -->
+  {stats.games.length > 0 && (
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Top by ELO -->
+      {topByElo.length > 0 && (
+        <div class="bg-white rounded-lg p-5 border border-gray-200 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Top Games by ELO</h3>
+          <div class="space-y-3">
+            {topByElo.map((game, index) => (
+              <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                <div class="flex items-center gap-3">
+                  <div class="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900 text-sm">{game.name}</p>
+                    {game.arena && (
+                      <span class={`inline-block mt-0.5 px-1.5 py-0.5 text-xs font-medium rounded ${arenaColors[game.arena]?.bg || 'bg-gray-100'} ${arenaColors[game.arena]?.text || 'text-gray-700'}`}>
+                        {game.arena} Arena
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div class="text-right">
+                  <p class="text-lg font-bold text-indigo-600">{game.elo}</p>
+                  {game.matches && game.wins !== undefined && (
+                    <p class="text-xs text-gray-500">
+                      {game.wins}/{game.matches} wins
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Most Played -->
+      {mostPlayed.length > 0 && (
+        <div class="bg-white rounded-lg p-5 border border-gray-200 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Most Played Games</h3>
+          <div class="space-y-3">
+            {mostPlayed.map((game, index) => {
+              const winRate = game.matches && game.wins !== undefined
+                ? Math.round((game.wins / game.matches) * 100)
+                : null;
+              return (
+                <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                  <div class="flex items-center gap-3">
+                    <div class="w-7 h-7 rounded-full bg-emerald-600 flex items-center justify-center text-white text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <p class="font-medium text-gray-900 text-sm">{game.name}</p>
+                      {game.elo && (
+                        <p class="text-xs text-gray-500">ELO: {game.elo}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-lg font-bold text-emerald-600">{game.matches}x</p>
+                    {winRate !== null && (
+                      <p class="text-xs text-gray-500">
+                        {winRate}% wins
+                      </p>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  )}
+
+  <!-- Full Game List (expandable) -->
+  {stats.games.length > 5 && (
+    <details class="bg-white rounded-lg border border-gray-200 shadow-sm">
+      <summary class="px-5 py-4 cursor-pointer font-bold text-gray-900 hover:bg-gray-50 transition">
+        All {stats.games.length} Games
+      </summary>
+      <div class="px-5 pb-5">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-200">
+                <th class="text-left py-2 pr-4 font-semibold text-gray-700">Game</th>
+                <th class="text-right py-2 px-2 font-semibold text-gray-700">ELO</th>
+                <th class="text-right py-2 px-2 font-semibold text-gray-700">Played</th>
+                <th class="text-right py-2 px-2 font-semibold text-gray-700">Wins</th>
+                <th class="text-right py-2 pl-2 font-semibold text-gray-700">Win %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stats.games
+                .sort((a, b) => (b.matches || 0) - (a.matches || 0))
+                .map((game) => {
+                  const winRate = game.matches && game.wins !== undefined
+                    ? Math.round((game.wins / game.matches) * 100)
+                    : null;
+                  return (
+                    <tr class="border-b border-gray-100 last:border-b-0">
+                      <td class="py-2 pr-4">
+                        <span class="font-medium text-gray-900">{game.name}</span>
+                        {game.arena && (
+                          <span class={`ml-2 inline-block px-1.5 py-0.5 text-xs font-medium rounded ${arenaColors[game.arena]?.bg || 'bg-gray-100'} ${arenaColors[game.arena]?.text || 'text-gray-700'}`}>
+                            {game.arena}
+                          </span>
+                        )}
+                      </td>
+                      <td class="py-2 px-2 text-right text-gray-600">{game.elo ?? '—'}</td>
+                      <td class="py-2 px-2 text-right text-gray-600">{game.matches ?? '—'}</td>
+                      <td class="py-2 px-2 text-right text-gray-600">{game.wins ?? '—'}</td>
+                      <td class="py-2 pl-2 text-right">
+                        {winRate !== null ? (
+                          <span class={winRate >= 50 ? 'text-green-600 font-medium' : 'text-red-600'}>
+                            {winRate}%
+                          </span>
+                        ) : '—'}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+  )}
+
+  <!-- Additional Stats -->
+  {(stats.totals.xp !== undefined || stats.totals.prestige !== undefined || stats.totals.abandoned !== undefined) && (
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {stats.totals.xp !== undefined && (
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+          <p class="text-blue-700 text-xs uppercase tracking-wider">Experience</p>
+          <p class="text-xl font-bold text-blue-900 mt-1">{stats.totals.xp.toLocaleString()} XP</p>
+        </div>
+      )}
+
+      {stats.totals.prestige !== undefined && (
+        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
+          <p class="text-purple-700 text-xs uppercase tracking-wider">Prestige</p>
+          <p class="text-xl font-bold text-purple-900 mt-1">Level {stats.totals.prestige}</p>
+        </div>
+      )}
+
+      {stats.totals.abandoned !== undefined && stats.totals.abandoned > 0 && (
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-4 border border-amber-200">
+          <p class="text-amber-700 text-xs uppercase tracking-wider">Abandoned</p>
+          <p class="text-xl font-bold text-amber-900 mt-1">{stats.totals.abandoned}</p>
+        </div>
+      )}
+
+      {stats.totals.timeouts !== undefined && stats.totals.timeouts > 0 && (
+        <div class="bg-gradient-to-br from-red-50 to-rose-50 rounded-lg p-4 border border-red-200">
+          <p class="text-red-700 text-xs uppercase tracking-wider">Timeouts</p>
+          <p class="text-xl font-bold text-red-900 mt-1">{stats.totals.timeouts}</p>
+        </div>
+      )}
+    </div>
+  )}
+</div>

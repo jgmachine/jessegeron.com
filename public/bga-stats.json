@@ -1,0 +1,1151 @@
+{
+  "playerId": 95446131,
+  "playerName": "jg_machine",
+  "avatar": null,
+  "totals": {
+    "matches": 197,
+    "xp": 2295,
+    "reputation": 100,
+    "friends": 12,
+    "achievements": 111
+  },
+  "games": [
+    {
+      "name": "Azul",
+      "elo": 163,
+      "matches": 15,
+      "wins": 11,
+      "winPct": 77
+    },
+    {
+      "name": "Ark Nova",
+      "elo": 120,
+      "matches": 22,
+      "wins": 7,
+      "winPct": 39
+    },
+    {
+      "name": "Lost Ruins of Arnak",
+      "elo": 130,
+      "matches": 5,
+      "wins": 4,
+      "winPct": 100
+    },
+    {
+      "name": "The Castles of Burgundy",
+      "elo": 107,
+      "matches": 15,
+      "wins": 6,
+      "winPct": 44
+    },
+    {
+      "name": "Terra Mystica",
+      "elo": 96,
+      "matches": 6,
+      "wins": 2,
+      "winPct": 50
+    },
+    {
+      "name": "Fromage",
+      "elo": 115,
+      "matches": 12,
+      "wins": 7,
+      "winPct": 58
+    },
+    {
+      "name": "Harmonies",
+      "elo": 100,
+      "matches": 9,
+      "wins": 3,
+      "winPct": 39
+    },
+    {
+      "name": "Faraway",
+      "elo": 106,
+      "matches": 5,
+      "wins": 3,
+      "winPct": 60
+    },
+    {
+      "name": "Earth",
+      "elo": 77,
+      "matches": 6,
+      "wins": 2,
+      "winPct": 29
+    },
+    {
+      "name": "Can't Stop",
+      "elo": 138,
+      "matches": 22,
+      "wins": 7,
+      "winPct": 30
+    },
+    {
+      "name": "Obsession",
+      "elo": 76,
+      "matches": 3,
+      "wins": 2,
+      "winPct": 67
+    },
+    {
+      "name": "Sky Team",
+      "elo": null,
+      "matches": 9,
+      "wins": 4,
+      "winPct": 22,
+      "arena": "Apprentice"
+    },
+    {
+      "name": "El Grande",
+      "elo": 81,
+      "matches": 2,
+      "wins": 1,
+      "winPct": 125
+    },
+    {
+      "name": "Wingspan",
+      "elo": 39,
+      "matches": 2,
+      "wins": 1,
+      "winPct": 50
+    },
+    {
+      "name": "Sail",
+      "elo": null,
+      "matches": 1,
+      "wins": 1,
+      "winPct": 50,
+      "arena": "Beginner"
+    },
+    {
+      "name": "Tic-Tac Match",
+      "elo": 85,
+      "matches": 4,
+      "wins": 3,
+      "winPct": 75
+    },
+    {
+      "name": "Cities",
+      "elo": 74,
+      "matches": 3,
+      "wins": 2,
+      "winPct": 83
+    },
+    {
+      "name": "Forest Shuffle",
+      "elo": 32,
+      "matches": 1,
+      "wins": 1,
+      "winPct": 100
+    },
+    {
+      "name": "7 Wonders Duel",
+      "elo": 46,
+      "matches": 1,
+      "wins": 1,
+      "winPct": 100
+    },
+    {
+      "name": "Patchwork",
+      "elo": 30,
+      "matches": 2,
+      "wins": 1,
+      "winPct": 50
+    },
+    {
+      "name": "Connect Four",
+      "elo": 75,
+      "matches": 6,
+      "wins": 2,
+      "winPct": 33
+    },
+    {
+      "name": "7 Wonders",
+      "elo": 93,
+      "matches": 1,
+      "wins": 1,
+      "winPct": 200
+    },
+    {
+      "name": "Sushi Go Party!",
+      "elo": 64,
+      "matches": 1,
+      "wins": 1,
+      "winPct": 150
+    },
+    {
+      "name": "Symbiose",
+      "elo": 53,
+      "matches": 2,
+      "wins": 1,
+      "winPct": 75
+    },
+    {
+      "name": "Railroad Ink",
+      "elo": 46,
+      "matches": 1,
+      "wins": 1,
+      "winPct": 100
+    },
+    {
+      "name": "7 Wonders Architects",
+      "elo": 39,
+      "matches": 1,
+      "wins": 1,
+      "winPct": 100
+    },
+    {
+      "name": "Yahtzee",
+      "elo": 38,
+      "matches": 1,
+      "wins": 1,
+      "winPct": 100
+    },
+    {
+      "name": "Flip 7",
+      "elo": 84,
+      "matches": 2,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Sushi Go!",
+      "elo": 40,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "No Thanks!",
+      "elo": 34,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Puerto Rico",
+      "elo": 33,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Ticket to Ride",
+      "elo": 20,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "For Sale",
+      "elo": 18,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Great Western Trail",
+      "elo": 15,
+      "matches": 2,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Age of Innovation",
+      "elo": 1,
+      "matches": 3,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Castle Combo",
+      "elo": 1,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Small World",
+      "elo": 1,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Exploding Kittens",
+      "elo": 1,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    },
+    {
+      "name": "Captain Flip",
+      "elo": 1,
+      "matches": 1,
+      "wins": 0,
+      "winPct": 0
+    }
+  ],
+  "fetchedAt": "2026-01-25T17:15:00.000Z",
+  "isDemo": false,
+  "playHistory": [
+    {
+      "date": "2025-01-04",
+      "count": 4,
+      "wins": 3,
+      "games": [
+        "Fromage"
+      ]
+    },
+    {
+      "date": "2025-01-07",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Heat: Pedal to the Metal"
+      ]
+    },
+    {
+      "date": "2025-01-16",
+      "count": 2,
+      "wins": 2,
+      "games": [
+        "Earth"
+      ]
+    },
+    {
+      "date": "2025-01-19",
+      "count": 3,
+      "wins": 0,
+      "games": [
+        "Harmonies",
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-01-20",
+      "count": 4,
+      "wins": 1,
+      "games": [
+        "The Castles of Burgundy",
+        "Earth",
+        "Fromage"
+      ]
+    },
+    {
+      "date": "2025-01-21",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Harmonies"
+      ]
+    },
+    {
+      "date": "2025-01-23",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Azul"
+      ]
+    },
+    {
+      "date": "2025-01-24",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Harmonies"
+      ]
+    },
+    {
+      "date": "2025-01-25",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "count": 7,
+      "wins": 4,
+      "games": [
+        "Azul",
+        "Small World",
+        "The Castles of Burgundy",
+        "Harmonies"
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Harmonies"
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "count": 5,
+      "wins": 3,
+      "games": [
+        "Azul",
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "Fromage"
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "count": 2,
+      "wins": 2,
+      "games": [
+        "The Castles of Burgundy",
+        "Azul"
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Wingspan"
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "count": 2,
+      "wins": 2,
+      "games": [
+        "Harmonies"
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "count": 2,
+      "wins": 0,
+      "games": [
+        "Ark Nova",
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "count": 3,
+      "wins": 0,
+      "games": [
+        "Ark Nova",
+        "Harmonies"
+      ]
+    },
+    {
+      "date": "2025-02-08",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Wingspan"
+      ]
+    },
+    {
+      "date": "2025-02-09",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Pax Pamir: Second Edition"
+      ]
+    },
+    {
+      "date": "2025-02-10",
+      "count": 4,
+      "wins": 1,
+      "games": [
+        "Earth"
+      ]
+    },
+    {
+      "date": "2025-02-12",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "The Castles of Burgundy",
+        "Obsession"
+      ]
+    },
+    {
+      "date": "2025-02-16",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Obsession"
+      ]
+    },
+    {
+      "date": "2025-02-24",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Fromage"
+      ]
+    },
+    {
+      "date": "2025-02-26",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "Fromage",
+        "Sky Team"
+      ]
+    },
+    {
+      "date": "2025-02-27",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Sky Team"
+      ]
+    },
+    {
+      "date": "2025-03-05",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Ticket to Ride"
+      ]
+    },
+    {
+      "date": "2025-03-06",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Sky Team"
+      ]
+    },
+    {
+      "date": "2025-03-13",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Gamme Logic"
+      ]
+    },
+    {
+      "date": "2025-03-17",
+      "count": 2,
+      "wins": 2,
+      "games": [
+        "Azul",
+        "Fromage"
+      ]
+    },
+    {
+      "date": "2025-03-23",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Azul"
+      ]
+    },
+    {
+      "date": "2025-03-24",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "Fromage",
+        "Azul"
+      ]
+    },
+    {
+      "date": "2025-03-26",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Azul"
+      ]
+    },
+    {
+      "date": "2025-03-27",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Azul"
+      ]
+    },
+    {
+      "date": "2025-04-07",
+      "count": 7,
+      "wins": 2,
+      "games": [
+        "Patchwork",
+        "Faraway",
+        "Azul: Summer Pavilion",
+        "Splendor",
+        "7 Wonders Duel"
+      ]
+    },
+    {
+      "date": "2025-04-08",
+      "count": 4,
+      "wins": 3,
+      "games": [
+        "Faraway",
+        "7 Wonders Architects",
+        "El Grande"
+      ]
+    },
+    {
+      "date": "2025-04-09",
+      "count": 16,
+      "wins": 6,
+      "games": [
+        "Forest Shuffle",
+        "Sushi Go!",
+        "Exploding Kittens",
+        "Connect Four",
+        "Yahtzee",
+        "LLAMA",
+        "Lucky Numbers",
+        "7 Wonders",
+        "Castle Combo",
+        "For Sale",
+        "Sushi Go Party!",
+        "Fluxx",
+        "No Thanks!",
+        "Tic-Tac Match"
+      ]
+    },
+    {
+      "date": "2025-04-10",
+      "count": 12,
+      "wins": 4,
+      "games": [
+        "Symbiose",
+        "Tic-Tac Match",
+        "Trio",
+        "Railroad Ink",
+        "Kamon",
+        "Can't Stop",
+        "Lost Cities",
+        "Captain Flip",
+        "Super Mega Lucky Box",
+        "Martian Dice"
+      ]
+    },
+    {
+      "date": "2025-04-13",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-04-14",
+      "count": 7,
+      "wins": 2,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-04-16",
+      "count": 2,
+      "wins": 0,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-04-17",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-04-18",
+      "count": 2,
+      "wins": 0,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-04-19",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Puerto Rico"
+      ]
+    },
+    {
+      "date": "2025-04-25",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-04-27",
+      "count": 3,
+      "wins": 2,
+      "games": [
+        "Power Vacuum",
+        "Can't Stop",
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-04-28",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "El Grande"
+      ]
+    },
+    {
+      "date": "2025-05-01",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "Can't Stop Express",
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-05-05",
+      "count": 4,
+      "wins": 3,
+      "games": [
+        "Obsession",
+        "Lost Ruins of Arnak",
+        "Patchwork"
+      ]
+    },
+    {
+      "date": "2025-05-06",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Lost Ruins of Arnak"
+      ]
+    },
+    {
+      "date": "2025-05-21",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "Great Western Trail",
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-05-25",
+      "count": 4,
+      "wins": 1,
+      "games": [
+        "Connect Four",
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-05-28",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-05-29",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Terra Mystica"
+      ]
+    },
+    {
+      "date": "2025-06-09",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Sky Team"
+      ]
+    },
+    {
+      "date": "2025-06-11",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Sky Team"
+      ]
+    },
+    {
+      "date": "2025-06-12",
+      "count": 2,
+      "wins": 2,
+      "games": [
+        "Sky Team"
+      ]
+    },
+    {
+      "date": "2025-06-15",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "Terra Mystica",
+        "Sky Team"
+      ]
+    },
+    {
+      "date": "2025-06-16",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Terra Mystica"
+      ]
+    },
+    {
+      "date": "2025-06-17",
+      "count": 2,
+      "wins": 0,
+      "games": [
+        "Flip 7",
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-06-23",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Age of Innovation: a Terra Mystica game"
+      ]
+    },
+    {
+      "date": "2025-06-26",
+      "count": 4,
+      "wins": 3,
+      "games": [
+        "Connect Four",
+        "Can't Stop",
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-06-27",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Flip 7"
+      ]
+    },
+    {
+      "date": "2025-07-05",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Terra Mystica"
+      ]
+    },
+    {
+      "date": "2025-07-06",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-07-07",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Age of Innovation: a Terra Mystica game"
+      ]
+    },
+    {
+      "date": "2025-07-08",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Terra Mystica"
+      ]
+    },
+    {
+      "date": "2025-07-13",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Gaia Project"
+      ]
+    },
+    {
+      "date": "2025-07-15",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-07-21",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-07-24",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Terra Mystica"
+      ]
+    },
+    {
+      "date": "2025-07-25",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-07-29",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-07-31",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Terra Nova"
+      ]
+    },
+    {
+      "date": "2025-08-05",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Twilight Imperium: Fourth Edition"
+      ]
+    },
+    {
+      "date": "2025-08-14",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-08-18",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-08-19",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Age of Innovation: a Terra Mystica game"
+      ]
+    },
+    {
+      "date": "2025-09-02",
+      "count": 2,
+      "wins": 0,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-09-07",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Apiary"
+      ]
+    },
+    {
+      "date": "2025-10-04",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-10-24",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Apiary"
+      ]
+    },
+    {
+      "date": "2025-11-05",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-11-07",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-11-14",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-11-30",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-12-02",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Ark Nova"
+      ]
+    },
+    {
+      "date": "2025-12-04",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-12-09",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Can't Stop"
+      ]
+    },
+    {
+      "date": "2025-12-10",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "Azul",
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2025-12-15",
+      "count": 3,
+      "wins": 1,
+      "games": [
+        "Ark Nova",
+        "Azul",
+        "Cities"
+      ]
+    },
+    {
+      "date": "2025-12-17",
+      "count": 2,
+      "wins": 1,
+      "games": [
+        "The Castles of Burgundy",
+        "Twilight Imperium: Fourth Edition"
+      ]
+    },
+    {
+      "date": "2025-12-23",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Cities"
+      ]
+    },
+    {
+      "date": "2025-12-26",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Lost Ruins of Arnak"
+      ]
+    },
+    {
+      "date": "2026-01-03",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "The Castles of Burgundy"
+      ]
+    },
+    {
+      "date": "2026-01-05",
+      "count": 1,
+      "wins": 0,
+      "games": [
+        "Sail"
+      ]
+    },
+    {
+      "date": "2026-01-10",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Lost Ruins of Arnak"
+      ]
+    },
+    {
+      "date": "2026-01-14",
+      "count": 2,
+      "wins": 0,
+      "games": [
+        "Agricola",
+        "Harmonies"
+      ]
+    },
+    {
+      "date": "2026-01-18",
+      "count": 1,
+      "wins": 1,
+      "games": [
+        "Ark Nova"
+      ]
+    }
+  ]
+}
