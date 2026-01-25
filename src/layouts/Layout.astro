@@ -31,6 +31,7 @@ const { title, description = "Jesse Geron's portfolio - K-12 Technology Leader, 
             <a href="/" class="text-2xl font-black text-gray-900 hover:text-blue-600 transition-colors">
               Jesse Geron
             </a>
+            <!-- Desktop Navigation -->
             <div class="hidden md:flex gap-10 items-center">
               <a href="/blog" class="text-gray-700 hover:text-blue-600 transition-colors font-semibold">
                 Blog
@@ -76,9 +77,71 @@ const { title, description = "Jesse Geron's portfolio - K-12 Technology Leader, 
                 About
               </a>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors" aria-label="Open menu">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
           </div>
         </nav>
       </header>
+
+      <!-- Mobile Menu Overlay -->
+      <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+
+      <!-- Mobile Menu Drawer -->
+      <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-2xl translate-x-full transition-transform duration-300 ease-out">
+        <div class="flex items-center justify-between p-6 border-b border-gray-200">
+          <span class="text-xl font-bold text-gray-900">Menu</span>
+          <button id="mobile-menu-close" class="p-2 text-gray-700 hover:text-blue-600 transition-colors" aria-label="Close menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <nav class="p-6 space-y-2">
+          <a href="/blog" class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition font-semibold">
+            Blog
+          </a>
+          <a href="/reading" class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition font-semibold">
+            Reading
+          </a>
+
+          <div class="pt-4 pb-2">
+            <span class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Work</span>
+          </div>
+          <a href="/ai-resources" class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition font-medium">
+            AI Resources
+          </a>
+          <a href="/projects" class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition font-medium">
+            Projects
+          </a>
+          <a href="/work-docs" class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition font-medium">
+            Work Docs
+          </a>
+
+          <div class="pt-4 pb-2">
+            <span class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Play</span>
+          </div>
+          <a href="/bgstats" class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition font-medium">
+            Board Game Stats
+          </a>
+          <a href="/board-games" class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition font-medium">
+            Tabletop Gaming
+          </a>
+          <a href="/biking" class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition font-medium">
+            Mountain Biking
+          </a>
+
+          <div class="pt-6">
+            <a href="/about" class="block w-full text-center btn-primary py-3">
+              About
+            </a>
+          </div>
+        </nav>
+      </div>
 
       <main class="flex-1">
         <slot />
@@ -117,5 +180,30 @@ const { title, description = "Jesse Geron's portfolio - K-12 Technology Leader, 
         </div>
       </footer>
     </div>
+
+    <script>
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const menuClose = document.getElementById('mobile-menu-close');
+      const menu = document.getElementById('mobile-menu');
+      const overlay = document.getElementById('mobile-menu-overlay');
+
+      function openMenu() {
+        menu?.classList.remove('translate-x-full');
+        overlay?.classList.remove('hidden');
+        setTimeout(() => overlay?.classList.remove('opacity-0'), 10);
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenu() {
+        menu?.classList.add('translate-x-full');
+        overlay?.classList.add('opacity-0');
+        setTimeout(() => overlay?.classList.add('hidden'), 300);
+        document.body.style.overflow = '';
+      }
+
+      menuBtn?.addEventListener('click', openMenu);
+      menuClose?.addEventListener('click', closeMenu);
+      overlay?.addEventListener('click', closeMenu);
+    </script>
   </body>
 </html>
