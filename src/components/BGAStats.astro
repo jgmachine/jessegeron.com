@@ -6,6 +6,7 @@
  */
 import { getBGAStats, getTopGamesByElo, getMostPlayedGames, getOverallWinRate, getDataFreshness } from "../lib/bga";
 import BGACalendarHeatmap from "./BGACalendarHeatmap.astro";
+import BGASpiderChart from "./BGASpiderChart.astro";
 
 const stats = await getBGAStats();
 const topByElo = getTopGamesByElo(stats, 5);
@@ -76,6 +77,11 @@ const arenaColors: Record<string, { bg: string; text: string; border: string }> 
   <!-- Activity Calendar Heatmap -->
   {playHistory.length > 0 && (
     <BGACalendarHeatmap playHistory={playHistory} />
+  )}
+
+  <!-- Game Proficiency Spider Chart -->
+  {stats.games.length >= 3 && (
+    <BGASpiderChart games={stats.games} limit={10} />
   )}
 
   <!-- Game Stats Tables -->
