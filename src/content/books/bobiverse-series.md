@@ -2,6 +2,10 @@
 title: "We Are Legion (We Are Bob) - Bobiverse Series"
 author: "Dennis E. Taylor"
 description: "A software engineer dies and wakes up as an AI controlling a Von Neumann probe, tasked with exploring and replicating across the galaxy."
+summary: "Hard sci-fi that's genuinely fun. A software engineer protagonist solving galaxy-spanning problems with wit and humor. The original trilogy is absolutely stellar."
+series: "Bobiverse"
+seriesPosition: 5
+seriesTotal: 5
 category: "Fiction"
 workPlayCategory: "Play"
 tags: ["sci-fi", "ai", "humor"]

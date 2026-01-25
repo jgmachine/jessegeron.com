@@ -2,10 +2,14 @@
 title: "Dungeon Crawler Carl"
 author: "Matt Dinniman"
 description: "Earth is destroyed and turned into a dungeon crawl game show for the universe. Carl and his ex-girlfriend's cat Donut must fight their way through to survive."
+summary: "Pure fun with phenomenal audiobook narration. Carl and a talking cat navigating a dungeon with humor, nostalgia, and great LitRPG mechanics. The perfect palate cleanser."
 category: "Fiction"
 workPlayCategory: "Play"
 tags: ["litrpg", "audiobook"]
-status: "reading"
+status: "read"
+series: "Dungeon Crawler Carl"
+seriesPosition: 3
+seriesTotal: 14
 recommended: true
 asin: "B08BKGYQXW"
 coverUrl: "/images/books/dungeon-crawler-carl.jpg"

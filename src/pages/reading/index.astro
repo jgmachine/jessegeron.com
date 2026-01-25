@@ -150,7 +150,24 @@ const toRead = books.filter(b => b.data.status === 'to-read');
                   <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                     {book.data.title}
                   </h3>
-                  <p class="text-sm text-gray-600 mb-3">{book.data.author}</p>
+                  <p class="text-sm text-gray-600 mb-2">{book.data.author}</p>
+                  {book.data.series && book.data.seriesPosition && book.data.seriesTotal && (
+                    <div class="mb-3">
+                      <p class="text-xs text-gray-500 mb-1">{book.data.series} ({book.data.seriesPosition}/{book.data.seriesTotal})</p>
+                      <div class="flex gap-1">
+                        {Array.from({ length: book.data.seriesTotal }, (_, i) => (
+                          <div
+                            class={`h-1.5 w-1.5 rounded-full ${
+                              i < book.data.seriesPosition ? 'bg-green-500' : 'bg-gray-300'
+                            }`}
+                          ></div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {book.data.description && (
+                    <p class="text-sm text-gray-700 mb-3">{book.data.description}</p>
+                  )}
                   <span class="px-3 py-1.5 bg-green-50 text-green-700 text-xs font-semibold rounded-full border border-green-200">
                     Reading
                   </span>
@@ -189,7 +206,24 @@ const toRead = books.filter(b => b.data.status === 'to-read');
                   <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                     {book.data.title}
                   </h3>
-                  <p class="text-sm text-gray-600">{book.data.author}</p>
+                  <p class="text-sm text-gray-600 mb-2">{book.data.author}</p>
+                  {book.data.series && book.data.seriesPosition && book.data.seriesTotal && (
+                    <div class="mb-3">
+                      <p class="text-xs text-gray-500 mb-1">{book.data.series} ({book.data.seriesPosition}/{book.data.seriesTotal})</p>
+                      <div class="flex gap-1">
+                        {Array.from({ length: book.data.seriesTotal }, (_, i) => (
+                          <div
+                            class={`h-1.5 w-1.5 rounded-full ${
+                              i < book.data.seriesPosition ? 'bg-blue-500' : 'bg-gray-300'
+                            }`}
+                          ></div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {book.data.summary && (
+                    <p class="text-sm text-gray-700">{book.data.summary}</p>
+                  )}
                 </div>
               </div>
             </article>
@@ -225,7 +259,24 @@ const toRead = books.filter(b => b.data.status === 'to-read');
                   <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                     {book.data.title}
                   </h3>
-                  <p class="text-sm text-gray-600">{book.data.author}</p>
+                  <p class="text-sm text-gray-600 mb-2">{book.data.author}</p>
+                  {book.data.series && book.data.seriesPosition && book.data.seriesTotal && (
+                    <div class="mb-3">
+                      <p class="text-xs text-gray-500 mb-1">{book.data.series} ({book.data.seriesPosition}/{book.data.seriesTotal})</p>
+                      <div class="flex gap-1">
+                        {Array.from({ length: book.data.seriesTotal }, (_, i) => (
+                          <div
+                            class={`h-1.5 w-1.5 rounded-full ${
+                              i < book.data.seriesPosition ? 'bg-yellow-500' : 'bg-gray-300'
+                            }`}
+                          ></div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {book.data.description && (
+                    <p class="text-sm text-gray-700">{book.data.description}</p>
+                  )}
                 </div>
               </div>
             </article>

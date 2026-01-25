@@ -2,6 +2,7 @@
 title: "Red Rising Series"
 author: "Pierce Brown"
 description: "In a color-coded dystopian future, Darrow infiltrates the elite Golds to bring down the oppressive society from within."
+summary: "Visceral action and political intrigue set in a fascinating dystopian world. The original trilogy is peak sci-fi: intense, character-driven, and impossible to put down."
 category: "Fiction"
 workPlayCategory: "Play"
 tags: ["sci-fi", "dystopian"]

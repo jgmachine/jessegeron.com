@@ -2,6 +2,7 @@
 title: "The Phoenix Project"
 author: "Gene Kim, Kevin Behr, George Spafford"
 description: "A novel about IT, DevOps, and helping your business win."
+summary: "Eye-opening DevOps principles through compelling narrative. The Theory of Constraints concept fundamentally changed how I approach organizational problems."
 category: "IT/Tech"
 workPlayCategory: "Work"
 tags: ["devops"]

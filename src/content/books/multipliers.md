@@ -2,6 +2,7 @@
 title: "Multipliers: How the Best Leaders Make Everyone Smarter"
 author: "Liz Wiseman"
 description: "Exploring the difference between leaders who amplify team intelligence versus those who diminish it."
+summary: "Transformed how I think about leadership. Clear framework showing how to amplify your team's intelligence rather than diminish it. Practical and achievable."
 category: "Leadership"
 workPlayCategory: "Work"
 tags: ["leadership", "management"]

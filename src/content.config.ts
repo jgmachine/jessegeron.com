@@ -89,6 +89,7 @@ const books = defineCollection({
     title: z.string(),
     author: z.string(),
     description: z.string(),
+    summary: z.string().optional(),
     category: z.string(), // Leadership, IT/Tech, AI, Fiction, Non-Fiction, etc.
     workPlayCategory: z.enum(['Work', 'Play']),
     tags: z.array(z.string()),
@@ -100,6 +101,9 @@ const books = defineCollection({
     asin: z.string().optional(),
     isbn: z.string().optional(),
     recommended: z.boolean().default(false),
+    series: z.string().optional(),
+    seriesPosition: z.number().optional(),
+    seriesTotal: z.number().optional(),
   }),
 });
 
