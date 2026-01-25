@@ -123,9 +123,16 @@ const maxPlays = Math.max(...playsByMonth.map(m => m.plays), 1);
             const winPct = month.plays > 0 ? (month.wins / month.plays) * 100 : 0;
             const lossPct = month.plays > 0 ? (month.losses / month.plays) * 100 : 0;
             const naPct = month.plays > 0 ? (month.na / month.plays) * 100 : 0;
+            // Calculate win rate excluding N/A games (only competitive games with a result)
+            const gamesWithResult = month.wins + month.losses;
+            const winRate = gamesWithResult > 0 ? (month.wins / gamesWithResult) * 100 : null;
             return (
-              <div class="flex flex-col items-center gap-2 h-full flex-1">
-                <div class="w-full h-full flex flex-col items-center justify-end">
+              <div class="flex flex-col items-center gap-1 h-full flex-1">
+                {/* Total plays label above bar */}
+                <div class="text-xs font-bold text-gray-700 h-5 flex items-end">
+                  {month.plays > 0 ? month.plays : ''}
+                </div>
+                <div class="w-full flex-1 flex flex-col items-center justify-end">
                   <div
                     class="w-full rounded-t overflow-hidden cursor-pointer relative group flex flex-col"
                     style={`height: ${Math.max(totalHeight, 5)}%`}
@@ -138,7 +145,12 @@ const maxPlays = Math.max(...playsByMonth.map(m => m.plays), 1);
                       <div class="w-full bg-red-400 hover:bg-red-500 transition-colors" style={`flex: ${lossPct}`}></div>
                     )}
                     {month.wins > 0 && (
-                      <div class="w-full bg-green-500 hover:bg-green-600 transition-colors" style={`flex: ${winPct}`}></div>
+                      <div class="w-full bg-green-500 hover:bg-green-600 transition-colors relative flex items-center justify-center" style={`flex: ${winPct}`}>
+                        {/* Win percentage inside green section */}
+                        {winRate !== null && (
+                          <span class="text-[10px] font-bold text-white drop-shadow-sm">{Math.round(winRate)}%</span>
+                        )}
+                      </div>
                     )}
                     {/* Tooltip */}
                     <div class="absolute -top-16 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-900 text-white text-xs py-1.5 px-2.5 rounded whitespace-nowrap z-10">
@@ -187,15 +199,23 @@ const maxPlays = Math.max(...playsByMonth.map(m => m.plays), 1);
             const winPct = yearData.plays > 0 ? (yearData.wins / yearData.plays) * totalPct : 0;
             const lossPct = yearData.plays > 0 ? (yearData.losses / yearData.plays) * totalPct : 0;
             const naPct = yearData.plays > 0 ? (yearData.na / yearData.plays) * totalPct : 0;
+            // Calculate win rate excluding N/A games (only games with a result)
+            const gamesWithResult = yearData.wins + yearData.losses;
+            const winRate = gamesWithResult > 0 ? (yearData.wins / gamesWithResult) * 100 : null;
             return (
               <div class="flex items-center gap-4 group">
                 <p class="w-16 font-bold text-gray-900">{yearData.year}</p>
                 <div class="flex-1 h-10 bg-gray-100 rounded-lg overflow-hidden flex relative">
                   {yearData.wins > 0 && (
                     <div
-                      class="h-full bg-green-500 transition-colors"
+                      class="h-full bg-green-500 transition-colors flex items-center justify-center"
                       style={`width: ${winPct}%`}
-                    ></div>
+                    >
+                      {/* Show win rate inside the green bar if there's enough space */}
+                      {winRate !== null && winPct > 15 && (
+                        <span class="text-xs font-bold text-white drop-shadow-sm">{Math.round(winRate)}%</span>
+                      )}
+                    </div>
                   )}
                   {yearData.losses > 0 && (
                     <div
@@ -208,6 +228,12 @@ const maxPlays = Math.max(...playsByMonth.map(m => m.plays), 1);
                       class="h-full bg-gray-300 transition-colors"
                       style={`width: ${naPct}%`}
                     ></div>
+                  )}
+                  {/* Win rate overlay for bars where green section is too small */}
+                  {winRate !== null && winPct <= 15 && (
+                    <div class="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+                      <span class="text-xs font-bold text-gray-700">{Math.round(winRate)}%</span>
+                    </div>
                   )}
                   {/* Tooltip on hover */}
                   <div class="absolute inset-0 flex items-center justify-end pr-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
