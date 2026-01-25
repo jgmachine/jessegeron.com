@@ -1,0 +1,454 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeaderBackground from "../../components/PageHeaderBackground.astro";
+import { fetchBGGPlays, fetchBGGCollection } from "../../lib/bgg";
+import { getParsedPlays, getPlaysByMonth, getTopGamesLastSixMonths, getPlaysByYear, getTopGamesAllTime, getPlaysByYearWithStats, getCoopVsCompetitiveStats } from "../../lib/bgg-extended";
+
+// Demo data in case file reading fails
+const demoStats = {
+  totalGames: 100,
+  totalPlays: 416,
+  uniqueGames: 100,
+  mostRecentPlay: "1/20/2026",
+  favoriteGames: [
+    { name: "Hot Streak", rating: 0, plays: 12 },
+    { name: "Formaggio", rating: 0, plays: 8 },
+    { name: "Pandemic Legacy: Season 1", rating: 0, plays: 8 },
+    { name: "Courtisans", rating: 0, plays: 8 },
+    { name: "7 Wonders", rating: 0, plays: 6 },
+  ],
+};
+
+const demoCollection = { count: 47, value: 0 };
+
+// Read from local XML files
+const statsData = await fetchBGGPlays("jgmachine");
+const collectionData = await fetchBGGCollection("jgmachine");
+const recentPlays = await getParsedPlays();
+const playsByMonth = await getPlaysByMonth();
+const topGamesLastSixMonths = await getTopGamesLastSixMonths();
+const playsByYear = await getPlaysByYear();
+const playsByYearWithStats = await getPlaysByYearWithStats();
+const topGamesAllTime = await getTopGamesAllTime();
+const coopVsCompetitive = await getCoopVsCompetitiveStats();
+
+const stats = statsData || demoStats;
+const collection = collectionData || demoCollection;
+
+// Find max plays for scaling the chart
+const maxPlays = Math.max(...playsByMonth.map(m => m.plays), 1);
+---
+
+<Layout title="Play Stats">
+  <!-- Header with animated background -->
+  <section class="relative py-20 overflow-hidden">
+    <PageHeaderBackground />
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="text-center">
+        <h1 class="text-5xl sm:text-6xl font-black text-gray-900 mb-2">
+          My Board Game <span class="gradient-text">Stats</span>
+        </h1>
+        <p class="text-xl text-gray-600">
+          Pulled from my <a href="https://boardgamegeek.com/user/jgmachine" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">BoardGameGeek profile</a>
+        </p>
+      </header>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+      <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+        <p class="text-gray-600 text-sm uppercase tracking-wider">
+          Logged Plays
+        </p>
+        <p class="text-3xl font-bold text-gray-900 mt-2">
+          {stats.totalPlays}
+        </p>
+      </div>
+
+      <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+        <p class="text-gray-600 text-sm uppercase tracking-wider">
+          Unique Games
+        </p>
+        <p class="text-3xl font-bold text-gray-900 mt-2">
+          {stats.uniqueGames}
+        </p>
+      </div>
+
+      <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+        <p class="text-gray-600 text-sm uppercase tracking-wider">
+          Last Played
+        </p>
+        <p class="text-lg font-bold text-gray-900 mt-2">
+          {stats.mostRecentPlay}
+        </p>
+      </div>
+
+      <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+        <a href="https://boardgamegeek.com/collection/user/jgmachine?own=1" target="_blank" rel="noopener noreferrer" class="block hover:opacity-80 transition">
+          <p class="text-gray-600 text-sm uppercase tracking-wider">
+            Games Owned
+          </p>
+          <p class="text-3xl font-bold text-blue-600 mt-2">
+            {collection?.count || "—"}
+          </p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Plays by Month Chart -->
+    {playsByMonth.length > 0 && (
+      <div class="mt-12 bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">Plays by Month (Last 12 Months)</h2>
+          <div class="flex items-center gap-4 text-sm">
+            <div class="flex items-center gap-1.5">
+              <div class="w-3 h-3 rounded-sm bg-green-500"></div>
+              <span class="text-gray-600">Wins</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <div class="w-3 h-3 rounded-sm bg-red-400"></div>
+              <span class="text-gray-600">Losses</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <div class="w-3 h-3 rounded-sm bg-gray-300"></div>
+              <span class="text-gray-600">N/A</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-end justify-between gap-2 h-64">
+          {playsByMonth.map((month) => {
+            const totalHeight = (month.plays / maxPlays) * 100;
+            const winPct = month.plays > 0 ? (month.wins / month.plays) * 100 : 0;
+            const lossPct = month.plays > 0 ? (month.losses / month.plays) * 100 : 0;
+            const naPct = month.plays > 0 ? (month.na / month.plays) * 100 : 0;
+            return (
+              <div class="flex flex-col items-center gap-2 h-full flex-1">
+                <div class="w-full h-full flex flex-col items-center justify-end">
+                  <div
+                    class="w-full rounded-t overflow-hidden cursor-pointer relative group flex flex-col"
+                    style={`height: ${Math.max(totalHeight, 5)}%`}
+                  >
+                    {/* Stacked segments - N/A on top, then losses, then wins at bottom */}
+                    {month.na > 0 && (
+                      <div class="w-full bg-gray-300 hover:bg-gray-400 transition-colors" style={`flex: ${naPct}`}></div>
+                    )}
+                    {month.losses > 0 && (
+                      <div class="w-full bg-red-400 hover:bg-red-500 transition-colors" style={`flex: ${lossPct}`}></div>
+                    )}
+                    {month.wins > 0 && (
+                      <div class="w-full bg-green-500 hover:bg-green-600 transition-colors" style={`flex: ${winPct}`}></div>
+                    )}
+                    {/* Tooltip */}
+                    <div class="absolute -top-16 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-900 text-white text-xs py-1.5 px-2.5 rounded whitespace-nowrap z-10">
+                      <div class="font-bold">{month.plays} plays</div>
+                      <div class="text-green-300">{month.wins}W</div>
+                      <div class="text-red-300">{month.losses}L</div>
+                      {month.na > 0 && <div class="text-gray-300">{month.na} N/A</div>}
+                    </div>
+                  </div>
+                </div>
+                <p class="text-sm font-semibold text-gray-600">{month.month}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    )}
+
+    <!-- Yearly Play Count -->
+    {playsByYearWithStats.length > 0 && (
+      <div class="mt-12 bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900">Plays by Year</h2>
+            <p class="text-sm text-gray-600 mt-1">Started tracking consistently on December 14, 2024</p>
+          </div>
+          <div class="flex items-center gap-4 text-sm">
+            <div class="flex items-center gap-1.5">
+              <div class="w-3 h-3 rounded-sm bg-green-500"></div>
+              <span class="text-gray-600">Wins</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <div class="w-3 h-3 rounded-sm bg-red-400"></div>
+              <span class="text-gray-600">Losses</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <div class="w-3 h-3 rounded-sm bg-gray-300"></div>
+              <span class="text-gray-600">N/A</span>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          {playsByYearWithStats.map((yearData) => {
+            const maxYearPlays = Math.max(...playsByYearWithStats.map(y => y.plays));
+            const totalPct = (yearData.plays / maxYearPlays) * 100;
+            const winPct = yearData.plays > 0 ? (yearData.wins / yearData.plays) * totalPct : 0;
+            const lossPct = yearData.plays > 0 ? (yearData.losses / yearData.plays) * totalPct : 0;
+            const naPct = yearData.plays > 0 ? (yearData.na / yearData.plays) * totalPct : 0;
+            return (
+              <div class="flex items-center gap-4 group">
+                <p class="w-16 font-bold text-gray-900">{yearData.year}</p>
+                <div class="flex-1 h-10 bg-gray-100 rounded-lg overflow-hidden flex relative">
+                  {yearData.wins > 0 && (
+                    <div
+                      class="h-full bg-green-500 transition-colors"
+                      style={`width: ${winPct}%`}
+                    ></div>
+                  )}
+                  {yearData.losses > 0 && (
+                    <div
+                      class="h-full bg-red-400 transition-colors"
+                      style={`width: ${lossPct}%`}
+                    ></div>
+                  )}
+                  {yearData.na > 0 && (
+                    <div
+                      class="h-full bg-gray-300 transition-colors"
+                      style={`width: ${naPct}%`}
+                    ></div>
+                  )}
+                  {/* Tooltip on hover */}
+                  <div class="absolute inset-0 flex items-center justify-end pr-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    <div class="bg-gray-900/90 text-white text-xs py-1 px-2 rounded flex gap-2">
+                      <span class="text-green-300">{yearData.wins}W</span>
+                      <span class="text-red-300">{yearData.losses}L</span>
+                      {yearData.na > 0 && <span class="text-gray-300">{yearData.na} N/A</span>}
+                    </div>
+                  </div>
+                </div>
+                <p class="w-24 text-right font-bold text-gray-900">{yearData.plays} plays</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    )}
+
+    <!-- Win/Loss Pie Charts - Cooperative vs Competitive -->
+    {(coopVsCompetitive.cooperative.total > 0 || coopVsCompetitive.competitive.total > 0) && (
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Cooperative Games Pie Chart -->
+        {coopVsCompetitive.cooperative.total > 0 && (
+          <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4 text-center">Co-op Games</h2>
+            <div class="flex flex-col items-center">
+              {(() => {
+                const wins = coopVsCompetitive.cooperative.wins;
+                const losses = coopVsCompetitive.cooperative.losses;
+                const total = coopVsCompetitive.cooperative.total;
+                const winPct = total > 0 ? (wins / total) * 100 : 0;
+                const lossPct = total > 0 ? (losses / total) * 100 : 0;
+                // Calculate the stroke-dasharray for the pie chart
+                const circumference = 2 * Math.PI * 45; // radius = 45
+                const winDash = (winPct / 100) * circumference;
+                const lossDash = (lossPct / 100) * circumference;
+                return (
+                  <>
+                    <svg viewBox="0 0 100 100" class="w-40 h-40 transform -rotate-90">
+                      {/* Background circle */}
+                      <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10" />
+                      {/* Wins segment */}
+                      <circle
+                        cx="50" cy="50" r="45"
+                        fill="none"
+                        stroke="#22c55e"
+                        stroke-width="10"
+                        stroke-dasharray={`${winDash} ${circumference}`}
+                        stroke-dashoffset="0"
+                      />
+                      {/* Losses segment */}
+                      <circle
+                        cx="50" cy="50" r="45"
+                        fill="none"
+                        stroke="#f87171"
+                        stroke-width="10"
+                        stroke-dasharray={`${lossDash} ${circumference}`}
+                        stroke-dashoffset={`${-winDash}`}
+                      />
+                    </svg>
+                    <div class="mt-4 flex gap-6 text-sm">
+                      <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-sm bg-green-500"></div>
+                        <span class="text-gray-600">Wins: <span class="font-bold text-gray-900">{wins}</span> ({winPct.toFixed(0)}%)</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-sm bg-red-400"></div>
+                        <span class="text-gray-600">Losses: <span class="font-bold text-gray-900">{losses}</span> ({lossPct.toFixed(0)}%)</span>
+                      </div>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500">{total} total plays</p>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+        )}
+
+        <!-- Competitive Games Pie Chart -->
+        {coopVsCompetitive.competitive.total > 0 && (
+          <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4 text-center">Competitive Games</h2>
+            <div class="flex flex-col items-center">
+              {(() => {
+                const wins = coopVsCompetitive.competitive.wins;
+                const losses = coopVsCompetitive.competitive.losses;
+                const total = coopVsCompetitive.competitive.total;
+                const winPct = total > 0 ? (wins / total) * 100 : 0;
+                const lossPct = total > 0 ? (losses / total) * 100 : 0;
+                // Calculate the stroke-dasharray for the pie chart
+                const circumference = 2 * Math.PI * 45; // radius = 45
+                const winDash = (winPct / 100) * circumference;
+                const lossDash = (lossPct / 100) * circumference;
+                return (
+                  <>
+                    <svg viewBox="0 0 100 100" class="w-40 h-40 transform -rotate-90">
+                      {/* Background circle */}
+                      <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10" />
+                      {/* Wins segment */}
+                      <circle
+                        cx="50" cy="50" r="45"
+                        fill="none"
+                        stroke="#22c55e"
+                        stroke-width="10"
+                        stroke-dasharray={`${winDash} ${circumference}`}
+                        stroke-dashoffset="0"
+                      />
+                      {/* Losses segment */}
+                      <circle
+                        cx="50" cy="50" r="45"
+                        fill="none"
+                        stroke="#f87171"
+                        stroke-width="10"
+                        stroke-dasharray={`${lossDash} ${circumference}`}
+                        stroke-dashoffset={`${-winDash}`}
+                      />
+                    </svg>
+                    <div class="mt-4 flex gap-6 text-sm">
+                      <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-sm bg-green-500"></div>
+                        <span class="text-gray-600">Wins: <span class="font-bold text-gray-900">{wins}</span> ({winPct.toFixed(0)}%)</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-sm bg-red-400"></div>
+                        <span class="text-gray-600">Losses: <span class="font-bold text-gray-900">{losses}</span> ({lossPct.toFixed(0)}%)</span>
+                      </div>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500">{total} total plays</p>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+        )}
+      </div>
+    )}
+
+    <!-- Top Played Games - Side by Side -->
+    {(topGamesAllTime.length > 0 || topGamesLastSixMonths.length > 0) && (
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Top Played Games (All Time) -->
+        {topGamesAllTime.length > 0 && (
+          <div class="bg-white rounded-lg p-5 border border-gray-200 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Top 10 Plays (All Time)</h2>
+            <div class="space-y-2">
+              {topGamesAllTime.map((game, index) => (
+                <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                  <div class="flex items-center gap-3">
+                    <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <p class="font-medium text-gray-900 text-sm">{game.name}</p>
+                  </div>
+                  <p class="text-sm font-bold text-blue-600">{game.plays}x</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Top Played Games (Last 6 Months) -->
+        {topGamesLastSixMonths.length > 0 && (
+          <div class="bg-white rounded-lg p-5 border border-gray-200 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Top 10 Plays (Last 6 Months)</h2>
+            <div class="space-y-2">
+              {topGamesLastSixMonths.map((game, index) => (
+                <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                  <div class="flex items-center gap-3">
+                    <div class="w-7 h-7 rounded-full bg-green-600 flex items-center justify-center text-white text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <p class="font-medium text-gray-900 text-sm">{game.name}</p>
+                  </div>
+                  <p class="text-sm font-bold text-green-600">{game.plays}x</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )}
+
+    {stats.favoriteGames.length === 0 && topGamesLastSixMonths.length === 0 && (
+      <div class="mt-12 bg-white rounded-lg p-6 border border-gray-200 shadow-sm text-center">
+        <p class="text-gray-600">
+          No play data available. Check that your BGG profile is public and has recorded plays.
+        </p>
+      </div>
+    )}
+
+    <!-- Recent Games Section -->
+    {recentPlays.length > 0 && (
+      <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Recent Games</h2>
+        <div class="space-y-3">
+          {recentPlays.slice(0, 15).map((play) => (
+            <div class="bg-white rounded-lg p-4 border border-gray-200 hover:border-blue-300 hover:shadow-md transition shadow-sm">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-2">
+                    <h3 class="text-lg font-bold text-gray-900">{play.gameName}</h3>
+                    {play.yourWin && (
+                      <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded">
+                        WIN
+                      </span>
+                    )}
+                    {!play.yourWin && (
+                      <span class="px-2 py-1 bg-red-100 text-red-800 text-xs font-bold rounded">
+                        LOSS
+                      </span>
+                    )}
+                  </div>
+                  <p class="text-sm text-gray-600 mb-2">
+                    {new Date(play.date).toLocaleDateString("en-US", {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <div class="text-sm text-gray-700 space-y-1">
+                    <p>Your Score: <span class="font-bold text-blue-600">{play.yourScore}</span></p>
+                    <p>Players: <span class="text-gray-600">{play.playerCount}</span></p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div
+                    class={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
+                      play.yourWin
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {play.yourScore}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</Layout>

@@ -3,7 +3,9 @@
 ---
 
 <div id="animated-bg" class="absolute inset-0 overflow-hidden pointer-events-none">
-  <canvas id="grid-canvas" class="w-full h-full"></canvas>
+  <canvas id="grid-canvas" class="w-full h-full opacity-60"></canvas>
+  <!-- Gradient fade-out at bottom -->
+  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white"></div>
 </div>
 
 <script>

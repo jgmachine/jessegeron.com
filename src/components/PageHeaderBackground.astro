@@ -4,7 +4,7 @@
 
 <div class="absolute inset-0 overflow-hidden pointer-events-none">
   <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-indigo-50"></div>
-  <canvas id="header-canvas" class="w-full h-full opacity-60"></canvas>
+  <canvas id="header-canvas" class="w-full h-full opacity-75"></canvas>
   <!-- Fade out gradient at bottom -->
   <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-white"></div>
 </div>
@@ -43,7 +43,7 @@
     }
     
     function drawGrid() {
-      ctx.strokeStyle = 'rgba(59, 130, 246, 0.08)';
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.12)';
       ctx.lineWidth = 1;
       
       // Vertical lines
@@ -86,7 +86,7 @@
           const distance = Math.sqrt(dx * dx + dy * dy);
           
           if (distance < 120) {
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 * (1 - distance / 120)})`;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${0.2 * (1 - distance / 120)})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
