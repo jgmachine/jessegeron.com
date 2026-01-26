@@ -86,7 +86,7 @@ const totalWins = playHistory.reduce((sum, e) => sum + e.wins, 0);
 const activeDays = playHistory.length;
 ---
 
-<div class="bg-white rounded-lg p-5 border border-gray-200 shadow-sm">
+<div class="bg-white rounded-lg p-5 border border-gray-200 shadow-sm relative" id="bga-heatmap-container">
   <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
     <h3 class="text-lg font-bold text-gray-900">Activity</h3>
     <div class="flex gap-4 text-xs text-gray-600">
@@ -96,8 +96,15 @@ const activeDays = playHistory.length;
     </div>
   </div>
 
+  <!-- Tooltip popup -->
+  <div id="heatmap-tooltip" class="hidden absolute z-50 bg-gray-900 text-white rounded-lg shadow-lg p-3 text-sm max-w-xs pointer-events-none">
+    <div id="tooltip-date" class="font-bold mb-1"></div>
+    <div id="tooltip-stats" class="text-gray-300 mb-2"></div>
+    <div id="tooltip-games" class="space-y-1"></div>
+  </div>
+
   <!-- Calendar container -->
-  <div class="w-full">
+  <div class="w-full relative">
     <!-- Month labels row -->
     <div class="flex ml-7 mb-1 relative h-4">
       {monthLabels.map(({ month, weekIndex }) => {
@@ -149,16 +156,13 @@ const activeDays = playHistory.length;
               ];
 
               const games = entry?.games || [];
-              const tooltip = count > 0
-                ? `${dateStr}: ${count} game${count > 1 ? "s" : ""}, ${wins} win${wins !== 1 ? "s" : ""} - ${games.join(", ")}`
-                : `${dateStr}: No games`;
-
               return (
                 <div
-                  class={`aspect-square rounded-sm ${isFuture ? "bg-gray-50" : colors[intensity]} cursor-pointer transition-transform hover:scale-125 hover:ring-1 hover:ring-gray-400`}
-                  title={tooltip}
+                  class={`heatmap-cell aspect-square rounded-sm ${isFuture ? "bg-gray-50" : colors[intensity]} cursor-pointer transition-transform hover:scale-125 hover:ring-1 hover:ring-gray-400`}
                   data-date={dateStr}
                   data-count={count}
+                  data-wins={wins}
+                  data-games={JSON.stringify(games)}
                 />
               );
             })}
@@ -189,3 +193,137 @@ const activeDays = playHistory.length;
     </div>
   </div>
 </div>
+
+<script>
+  const container = document.getElementById('bga-heatmap-container');
+  const tooltip = document.getElementById('heatmap-tooltip');
+  const tooltipDate = document.getElementById('tooltip-date');
+  const tooltipStats = document.getElementById('tooltip-stats');
+  const tooltipGames = document.getElementById('tooltip-games');
+
+  if (container && tooltip && tooltipDate && tooltipStats && tooltipGames) {
+    const cells = container.querySelectorAll('.heatmap-cell');
+    let pinnedCell: Element | null = null;
+
+    function formatDate(dateStr: string): string {
+      const date = new Date(dateStr + 'T00:00:00');
+      return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    }
+
+    function showTooltip(cell: Element, isPinned = false) {
+      const dateStr = cell.getAttribute('data-date') || '';
+      const count = parseInt(cell.getAttribute('data-count') || '0');
+      const wins = parseInt(cell.getAttribute('data-wins') || '0');
+      const games: string[] = JSON.parse(cell.getAttribute('data-games') || '[]');
+
+      tooltipDate.textContent = formatDate(dateStr);
+
+      if (count > 0) {
+        const winRate = Math.round((wins / count) * 100);
+        tooltipStats.innerHTML = `
+          <span class="text-white">${count}</span> game${count > 1 ? 's' : ''} ·
+          <span class="text-emerald-400">${wins}</span> win${wins !== 1 ? 's' : ''} ·
+          <span class="${winRate >= 50 ? 'text-emerald-400' : 'text-blue-400'}">${winRate}%</span>
+        `;
+
+        if (games.length > 0) {
+          tooltipGames.innerHTML = games.map(game =>
+            `<div class="flex items-center gap-2">
+              <span class="text-gray-400">•</span>
+              <span>${game}</span>
+            </div>`
+          ).join('');
+          tooltipGames.classList.remove('hidden');
+        } else {
+          tooltipGames.classList.add('hidden');
+        }
+      } else {
+        tooltipStats.textContent = 'No games played';
+        tooltipGames.classList.add('hidden');
+      }
+
+      // Position tooltip
+      const rect = cell.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+
+      let left = rect.left - containerRect.left + rect.width / 2;
+      let top = rect.top - containerRect.top - 8;
+
+      tooltip.classList.remove('hidden');
+
+      // Get tooltip dimensions after showing
+      const tooltipRect = tooltip.getBoundingClientRect();
+
+      // Adjust horizontal position to stay within container
+      left = left - tooltipRect.width / 2;
+      if (left < 0) left = 0;
+      if (left + tooltipRect.width > containerRect.width) {
+        left = containerRect.width - tooltipRect.width;
+      }
+
+      // Position above the cell, or below if not enough room
+      top = top - tooltipRect.height;
+      if (top < 0) {
+        top = rect.bottom - containerRect.top + 8;
+      }
+
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+
+      if (isPinned) {
+        tooltip.classList.add('ring-2', 'ring-white/30');
+      } else {
+        tooltip.classList.remove('ring-2', 'ring-white/30');
+      }
+    }
+
+    function hideTooltip() {
+      if (!pinnedCell) {
+        tooltip.classList.add('hidden');
+      }
+    }
+
+    cells.forEach(cell => {
+      const count = parseInt(cell.getAttribute('data-count') || '0');
+
+      // Only add interactions for days with games played
+      if (count > 0) {
+        cell.addEventListener('mouseenter', () => {
+          if (!pinnedCell) {
+            showTooltip(cell);
+          }
+        });
+
+        cell.addEventListener('mouseleave', () => {
+          hideTooltip();
+        });
+
+        cell.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (pinnedCell === cell) {
+            // Unpin if clicking the same cell
+            pinnedCell = null;
+            tooltip.classList.add('hidden');
+          } else {
+            // Pin to this cell
+            pinnedCell = cell;
+            showTooltip(cell, true);
+          }
+        });
+      }
+    });
+
+    // Click outside to unpin
+    document.addEventListener('click', () => {
+      if (pinnedCell) {
+        pinnedCell = null;
+        tooltip.classList.add('hidden');
+      }
+    });
+  }
+</script>
