@@ -232,10 +232,20 @@ const activeDays = playHistory.length;
         `;
 
         if (games.length > 0) {
-          tooltipGames.innerHTML = games.map(game =>
+          // Group games by name and count occurrences
+          const gameCounts = new Map<string, number>();
+          games.forEach(game => {
+            gameCounts.set(game, (gameCounts.get(game) || 0) + 1);
+          });
+
+          // Sort by count (descending), then alphabetically
+          const sortedGames = Array.from(gameCounts.entries())
+            .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+          tooltipGames.innerHTML = sortedGames.map(([game, playCount]) =>
             `<div class="flex items-center gap-2">
               <span class="text-gray-400">•</span>
-              <span>${game}</span>
+              <span>${game}${playCount > 1 ? ` <span class="text-gray-400">×${playCount}</span>` : ''}</span>
             </div>`
           ).join('');
           tooltipGames.classList.remove('hidden');

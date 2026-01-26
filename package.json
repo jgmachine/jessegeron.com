@@ -8,6 +8,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "fetch:bgg": "node scripts/fetch-bgg.js",
+    "update:bga": "node scripts/update-bga-stats.js",
     "prebuild": "npm run fetch:bgg"
   },
   "dependencies": {

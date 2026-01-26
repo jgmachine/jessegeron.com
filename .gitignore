@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# BGA data download (large HTML exports and assets)
+bga-data-download/*.html
+bga-data-download/*_files/
